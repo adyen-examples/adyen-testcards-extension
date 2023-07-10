@@ -1,0 +1,182 @@
+[
+    {
+        "group" : "American Express (Amex)", 
+        "cards" : [
+            {
+                "cardnumber" : "3700 0000 0000 002",
+                "expiry" : "03/30",
+                "CVC" : "7373"
+            },
+            {
+                "cardnumber" : "3700 0000 0100 018",
+                "expiry" : "03/30",
+                "CVC" : "7373"
+            },
+            {
+                "cardnumber" : "3714 4963 5398 431",
+                "expiry" : "03/30",
+                "CVC" : "7373",
+                "secure3DS" : true
+            }
+        ]
+    },
+    {
+        "group" : "Bancontact (BCMC)", 
+        "cards" : [
+            {
+                "cardnumber" : "4871 0499 9999 9910",
+                "expiry" : "03/30",
+                "CVC" : "737",
+                "secure3DS" : true
+            }
+        ]
+    },
+    {
+        "group" : "Cartes Bancaires", 
+        "cards" : [
+            {
+                "cardnumber" : "4035 5010 0000 0008",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "4035 5014 2814 6300",
+                "expiry" : "03/30",
+                "CVC" : "737",
+                "secure3DS" : true
+            }
+        ]
+    },
+    {
+        "group" : "Mastercard", 
+        "cards" : [
+            {
+                "cardnumber" : "2222 4000 7000 0005",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "5555 3412 4444 1115",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "5577 0000 5577 0004",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            }, 
+            {
+                "cardnumber" : "5555 4444 3333 1111",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+
+            {
+                "cardnumber" : "2222 4107 4036 0010",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "5555 5555 5555 4444",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "2222 4107 0000 0002",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "2222 4000 1000 0008",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "2223 0000 4841 0010",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "2222 4000 6000 0007",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "2223 5204 4356 0010",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "2222 4000 3000 0004",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "5100 0600 0000 0002",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "2222 4000 5000 0009",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "5103 2219 1119 9245",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            }
+        ]
+    },
+    {
+        "group" : "Visa", 
+        "cards" : [
+            {
+                "cardnumber" : "4111 1111 4555 1142",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "4111 1120 1426 7661",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "4988 4388 4388 4305",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            }, 
+            {
+                "cardnumber" : "4166 6766 6766 6746",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            }, 
+            {
+                "cardnumber" : "4111 1111 1111 1111",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            }, 
+            {
+                "cardnumber" : "4444 3333 2222 1111",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            }, 
+            {
+                "cardnumber" : "4917 6100 0000 0000",
+                "expiry" : "03/30",
+                "CVC" : "737",
+                "secure3DS" : true
+            }
+        ]
+    },
+    {
+        "group" : "Visa Electron", 
+        "cards" : [
+            {
+                "cardnumber" : "4001 0200 0000 0009",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            }
+        ]
+    }
+]
