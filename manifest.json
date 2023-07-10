@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "Adyen Test Cards",
+    "version": "0.0.1",
+    "description": "All Adyen Test Cards you need to test your Checkout integration.",
+    "default_locale": "en",
+    "action": {
+      "default_title": "Adyen Test Cards"
+    },
+    "icons": {
+      "16": "images/logo-adyen-A.png",
+      "48": "images/logo-adyen-A.png",
+      "128": "images/logo-adyen-A.png"
+    },
+    "background": {
+      "service_worker": "service-worker.js"
+    },
+    "side_panel": {
+      "default_path": "panel.html"
+    },
+    "permissions": ["sidePanel", "scripting", "activeTab"],
+    "host_permissions": ["https://*/*", "http://*/*"],
+    "web_accessible_resources": [
+      {
+        "resources": [ "data.json" ],
+        "matches": [ "https://*/*", "http://*/*" ]
+      }
+    ]
+    
+  }

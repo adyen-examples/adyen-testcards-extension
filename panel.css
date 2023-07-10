@@ -1,0 +1,52 @@
+
+body {
+  font-family: sans-serif;
+  font-size: 15px;
+  font-weight: 200;
+}
+
+.hidden {
+  display: none;
+}
+
+a {
+  color: #06f;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.cardnumbers {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+
+.cardnumbers td {
+  padding: 6px;
+  border-bottom: 1pt solid #33b964;
+}
+
+.cardnumbers table{
+  width: 100%; 
+}
+
+.cardnumbers td:first-child {
+  width: 300px; 
+}
+.cardnumbers tr:nth-child(even){background-color: white;}
+
+.cardnumbers tr:hover {background-color: #ddd;}
+
+.cardnumbers th {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  text-align: left;
+  background-color:white;
+  color: gray;
+  font-weight: 600;
+}
+
+.sectionTitle {
+  padding-left: 5px;
+
+}
