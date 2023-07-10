@@ -3,7 +3,6 @@
     "name": "Adyen Test Cards",
     "version": "0.0.1",
     "description": "All Adyen Test Cards you need to test your Checkout integration.",
-    "default_locale": "en",
     "action": {
       "default_title": "Adyen Test Cards"
     },
