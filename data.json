@@ -24,10 +24,19 @@
         "group" : "Bancontact (BCMC)", 
         "cards" : [
             {
+                "cardnumber" : "6703 4444 4444 4449",
+                "expiry" : "03/30",
+                "CVC" : ""
+            },
+            {
+                "cardnumber" : "6703 0000 0000 0000 003",
+                "expiry" : "03/30",
+                "CVC" : ""
+            },
+            {
                 "cardnumber" : "4871 0499 9999 9910",
                 "expiry" : "03/30",
-                "CVC" : "737",
-                "secure3DS" : true
+                "CVC" : "737"
             }
         ]
     },
@@ -40,8 +49,91 @@
                 "CVC" : "737"
             },
             {
+                "cardnumber" : "4360 0000 0100 0005",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
                 "cardnumber" : "4035 5014 2814 6300",
                 "expiry" : "03/30",
+                "CVC" : "737",
+                "secure3DS" : true
+            }
+        ]
+    },
+    {
+        "group" : "China UnionPay", 
+        "cards" : [
+            {
+                "cardnumber" : "8171 9999 2766 0000",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "8171 9999 0000 0000 021",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "6243 0300 0000 0001",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "6250 9470 0000 0014",
+                "expiry" : "03/30",
+                "CVC" : "123",
+                "secure3DS" : true
+            }
+        ]
+    },
+    {
+        "group" : "Diners", 
+        "cards" : [
+            {
+                "cardnumber" : "3600 6666 3333 44",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "3607 0500 0010 20",
+                "expiry" : "03/30",
+                "CVC" : "737",
+                "secure3DS" : true
+            }
+        ]
+    },
+    {
+        "group" : "Discover", 
+        "cards" : [
+            {
+                "cardnumber" : "6011 6011 6011 6611",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "6445 6445 6445 6445",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "3056 9309 0259 04",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            }
+        ]
+    },
+    {
+        "group" : "Maestro", 
+        "cards" : [
+            {
+                "cardnumber" : "6771 7980 2100 0008",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            },
+            {
+                "cardnumber" : "5000 5500 0000 0029",
+                "expiry" : "",
                 "CVC" : "737",
                 "secure3DS" : true
             }
@@ -174,6 +266,16 @@
         "cards" : [
             {
                 "cardnumber" : "4001 0200 0000 0009",
+                "expiry" : "03/30",
+                "CVC" : "737"
+            }
+        ]
+    },
+    {
+        "group" : "V Pay", 
+        "cards" : [
+            {
+                "cardnumber" : "4013 2500 0000 0000 006",
                 "expiry" : "03/30",
                 "CVC" : "737"
             }
