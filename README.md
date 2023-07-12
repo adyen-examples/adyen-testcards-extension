@@ -2,7 +2,7 @@
 
 Chrome extension with Adyen Test Cards
 
-![Browser extension image](browser-extension-image.png)
+![Browser extension image](browser-extension.gif)
 
 ## Adyen Test Cards
 
