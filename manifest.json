@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Adyen Test Cards",
     "version": "0.0.1",
-    "description": "All Adyen Test Cards you need to test your Checkout integration.",
+    "description": "Copy and prefill Adyen test card numbers with a single click.",
     "action": {
       "default_title": "Adyen Test Cards"
     },
