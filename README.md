@@ -6,7 +6,7 @@ Chrome extension with Adyen Test Cards
 
 ## Adyen Test Cards
 
-Adyen provides [test card numbers](https://docs.adyen.com/development-resources/testing/test-card-numbers) to test the Checkout integration with different payment methods and flow.
+Adyen provides [test card numbers](https://docs.adyen.com/development-resources/testing/test-card-numbers) to test the Checkout integration with different payment methods and flows.
 
 This Chrome extension brings those test card numbers directly into your browser where you can:
 * copy the card number to the clipboard
