@@ -133,8 +133,8 @@
             },
             {
                 "cardnumber" : "5000 5500 0000 0029",
-                "expiry" : "",
-                "CVC" : "737",
+                "expiry" : "03/30",
+                "CVC" : "",
                 "secure3DS" : true
             }
         ]
