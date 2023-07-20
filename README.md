@@ -23,7 +23,16 @@ This Chrome extension brings those test card numbers directly into your browser 
 
 #### Install from Chrome Web Store
 
-TODO
+1. Find the extension in the [Chrome Web Store](https://chrome.google.com/webstore/detail/adyen-test-cards/icllkfleeahmemjgoibajcmeoehkeoag)
+2. Click "Add to Chrome"
+
+The installation will warn that the extension can read and write data on all websites:
+
+![Chrome Web Store message](chrome-store-popup.png)
+
+> **Note**
+This is necessary as the Adyen Test Cards extension copies (using Javascript) the selected card details into the Credit Card fields. No other data nor fields are read or changed.
+>
 
 ### How to use use it
 
