@@ -1,54 +1,188 @@
   // suffix displaying 3DS support
   const THREE_DS_SUFFIX = " (3DS)";
+  // list of cards
+  let list = [];
 
   $("#search").on("keyup", function() {
     var value = $(this).val().toLowerCase();
     $(".cardnumbers").each(function(i, card) {
-      console.log(card);
       $(card).toggle($(card).text().toLowerCase().indexOf(value) > -1)
     });
     
 });
 
+// load content of the panel
 async function load() {
 
-  const res = await fetch(chrome.runtime.getURL('data.json'));
-  const obj = await res.json()
-  $('#cards').append(listCards(obj));
+  list = await getFromStorage();
+
+  if(list == undefined) {
+    // first time: load from json file
+    list = await loadFromFile();
+    await setInStorage(list);
+  }
+
+  $('#cards').html(listCards(list));
 }
 
 function listCards(data) {
   var outerdiv = $('<div>');
 
+  // favourites section
+  outerdiv.append(createFavourites(data));
+
+  // all cards section
   $.each(data , function(index, item) { 
-    var div = $('<div>').addClass("cardnumbers");
-    var h3 = $('<h3>').addClass("sectionTitle").text(item.group);
-    div.append(h3);
-    div.append(createTable(item.cards));
+
+    const cards = createTable(item.cards);
+    if(cards != undefined) {
+      var div = $('<div>').addClass("cardnumbers");
+      var h3 = $('<h3>').addClass("sectionTitle").text(item.group);
+      div.append(h3);
+  
+      div.append(cards);
+    }
     outerdiv.append(div);
   });
 
   return outerdiv;
 }
 
-function createTable(cards) {
+// render favourites section
+function createFavourites(cards) {
+
+  var divFavourites = $('<div>').addClass("cardnumbers");
+  var h3 = $('<h3>').addClass("sectionTitle").text("Favourites");
+  divFavourites.append(h3);
+
+  let numFavs = 0;
+
   var table = $('<table>');
   $.each(cards , function(index, item) { 
-    var row = $('<tr>');
-    if(item.secure3DS) {
-      // add suffix when card flow supports 3DS ie 3714 4963 5398 431 (3DS)
-      var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber + THREE_DS_SUFFIX));
-    } else {
-      var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
-    }
-    var td2 = ($('<td>').addClass("tdExpiry").text(item.expiry));
-    var td3 = ($('<td>').addClass("tdCode").text(item.CVC));
-    var td4 = ($('<td>').append(createLinks()));
-    row.append(td1).append(td2).append(td3).append(td4);
-    table.append(row); 
+    $.each(item.cards , function(index, item) { 
+
+      if(item.favourite) {
+        numFavs++;
+
+        var row = $('<tr>');
+        var td0 = ($('<td>').append(getUnfavIcon(item.cardnumber)));
+        if(item.secure3DS) {
+          // add suffix when card flow supports 3DS ie 3714 4963 5398 431 (3DS)
+          var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber + THREE_DS_SUFFIX));
+        } else {
+          var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
+        }
+        var td2 = ($('<td>').addClass("tdExpiry").text(item.expiry));
+        var td3 = ($('<td>').addClass("tdCode").text(item.CVC));
+        var td4 = ($('<td>').append(createLinks()));
+        row.append(td0).append(td1).append(td2).append(td3).append(td4);
+        table.append(row); 
+      }
+      divFavourites.append(table);
+    })
   });
 
-  return table;
+  if(numFavs == 0) {
+    // empty section
+    var text = $('<em>').text("Add favourites if you like :-)");
+    divFavourites.append(text);
+  }
+
+  return divFavourites;
+}
+
+// add card to favourites
+function makeFav(cardnumber) {
+
+  for (let i = 0; i < list.length; i++) {
+    let items = list[i].cards;
+
+    for (let j = 0; j < items.length; j++) {
+      let item = items[j];
+      if(item.cardnumber === cardnumber) {
+        item.favourite = true;  // mark as fav
+        }
+    }
+  }
+
+  // save to storage and reload
+  setInStorage(list);
+  load();
+}
+
+// add card to favourites
+function makeUnfav(cardnumber) {
+
+  for (let i = 0; i < list.length; i++) {
+    let items = list[i].cards;
+
+    for (let j = 0; j < items.length; j++) {
+      let item = items[j];
+      if(item.cardnumber === cardnumber) {
+        item.favourite = false;  // mark as not fav
+        }
+    }
+  }
+
+  // save to storage and reload
+  setInStorage(list);
+  load();
+}
+
+// render brand of cards
+function createTable(cards) {
+
+  let numCards = 0;
+
+  var table = $('<table>');
+  $.each(cards , function(index, item) { 
+
+    if(!item.favourite) {
+      numCards++;
+
+      var row = $('<tr>');
+      var td0 = ($('<td>').append(getFavIcon(item.cardnumber)));
+      if(item.secure3DS) {
+        // add suffix when card flow supports 3DS ie 3714 4963 5398 431 (3DS)
+        var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber + THREE_DS_SUFFIX));
+      } else {
+        var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
+      }
+      var td2 = ($('<td>').addClass("tdExpiry").text(item.expiry));
+      var td3 = ($('<td>').addClass("tdCode").text(item.CVC));
+      var td4 = ($('<td>').append(createLinks()));
+      row.append(td0).append(td1).append(td2).append(td3).append(td4);
+      table.append(row); 
+    }
+  });
+
+  if(numCards > 0) {
+    return table;
+  } else {
+    return undefined;
+  }
+}
+
+// icon to add card in favourites
+function getFavIcon(cardnumber) {
+  var div = $('<div>').addClass("fav-icon");
+
+  div.on('click', function() {
+    makeFav(cardnumber);
+  });
+  
+  return div;
+}
+
+// icon to remove card from favourites
+function getUnfavIcon(cardnumber) {
+  var div = $('<div>').addClass("unfav-icon");
+
+  div.on('click', function() {
+    makeUnfav(cardnumber);
+  });
+  
+  return div;
 }
 
 // create action links (copy, prefill)
@@ -144,6 +278,26 @@ function prefillCardComponent(cardNumberTd, expiryTd, codeTd) {
     document.execCommand('insertText', false, "J. Smith");
   }
   
+}
+
+// save cards in local storage
+async function setInStorage(cards) {
+  await chrome.storage.local.set( {adyencards: cards});
+}
+
+// get cards from local storage
+async function getFromStorage() {
+  let cards = await chrome.storage.local.get(["adyencards"]); 
+
+  return cards.adyencards;
+}
+
+// load cards from json file
+async function loadFromFile() {
+  console.log("loadFromFile data.json");
+  const res = await fetch(chrome.runtime.getURL('data.json'));
+  const obj = await res.json()
+  return obj;
 }
 
 
