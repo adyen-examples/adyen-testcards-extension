@@ -30,7 +30,7 @@ a {
   width: 100%; 
 }
 
-.cardnumbers td:first-child {
+.cardnumbers td:second-child {
   width: 300px; 
 }
 .cardnumbers tr:nth-child(even){background-color: white;}
@@ -49,4 +49,30 @@ a {
 .sectionTitle {
   padding-left: 5px;
 
+} 
+
+.fav-icon {
+  width: 15px;
+  height: 15px;
+  background-image: url('./images/empty-start.png'); 
+  background-size: cover; /* Adjust the image size to fit the container */
+  transition: background-image 0.2s; /* Add a smooth transition effect for background image */
+  cursor: pointer;
+}
+
+.fav-icon:hover {
+  background-image: url('./images/yellow-star.png'); 
+}
+
+.unfav-icon {
+  width: 15px;
+  height: 15px;
+  background-image: url('./images/yellow-star.png'); 
+  background-size: cover; /* Adjust the image size to fit the container */
+  transition: background-image 0.2s; /* Add a smooth transition effect for background image */
+  cursor: pointer;
+}
+
+.unfav-icon:hover {
+  background-image: url('./images/empty-start.png'); 
 }
