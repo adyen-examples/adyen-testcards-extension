@@ -44,6 +44,17 @@ We commit all our new features directly into our GitHub repository. Feel free to
 
 Find out more in our [contributing](https://github.com/adyen-examples/.github/blob/main/CONTRIBUTING.md) guidelines.
 
+### Build & publish
+
+In order to publish a new release:
+* develop and test features and changes
+* update `manifest.json` (update version and other applicable attributes ie update description, modify permissions, etc..)
+* create zip file: `zip -r adyen-testcards-ext.zip ./ -x "./e2e/*" ".git/*"`
+* upload zip file to Chrome Web Store
+
+**Note**: the list of cards is saved (as JSON) on local storage. If the JSON format changes then the existing users might be affected (breaking change?). 
+
+
 
 ## License
 
