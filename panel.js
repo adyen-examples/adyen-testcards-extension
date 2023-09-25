@@ -277,6 +277,24 @@ function prefillCardComponent(cardNumberTd, expiryTd, codeTd) {
     document.execCommand('selectAll', false, null);
     document.execCommand('insertText', false, "J. Smith");
   }
+
+  // prefill expiryMonth (for custom card implementation)
+  var expiryMonth = document.querySelector('input[id^="adyen-checkout-encryptedExpiryMonth-"]');
+  console.log(expiryMonth);
+  if(expiryMonth != null) { 
+    console.log(expiryTd.slice(0, 2));
+    expiryMonth.focus();
+    document.execCommand('selectAll', false, null);
+    document.execCommand('insertText', false, expiryTd.slice(0, 2));
+  }
+
+  // prefill expiryYear (for custom card implementation)
+  var expiryYear = document.querySelector('input[id^="adyen-checkout-encryptedExpiryYear-"]');
+  if(expiryYear != null) { 
+    expiryYear.focus();
+    document.execCommand('selectAll', false, null);
+    document.execCommand('insertText', false, expiryTd.slice(-2));
+  }
   
 }
 
