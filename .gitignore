@@ -135,3 +135,6 @@ playwright-report/
 playwright/.cache/
 
 
+# others
+.DS_Store
+
