@@ -21,7 +21,7 @@
         ]
     },
     {
-        "group" : "Bancontact (BCMC)", 
+        "group" : "Bancontact (BCMC) / Maestro", 
         "cards" : [
             {
                 "cardnumber" : "6703 4444 4444 4449",
@@ -32,7 +32,12 @@
                 "cardnumber" : "6703 0000 0000 0000 003",
                 "expiry" : "03/30",
                 "CVC" : ""
-            },
+            }
+        ]
+    },
+    {
+        "group" : "Bancontact (BCMC) / Visa Debit", 
+        "cards" : [
             {
                 "cardnumber" : "4871 0499 9999 9910",
                 "expiry" : "03/30",
@@ -44,11 +49,6 @@
         "group" : "Cartes Bancaires", 
         "cards" : [
             {
-                "cardnumber" : "4035 5010 0000 0008",
-                "expiry" : "03/30",
-                "CVC" : "737"
-            },
-            {
                 "cardnumber" : "4360 0000 0100 0005",
                 "expiry" : "03/30",
                 "CVC" : "737"
@@ -58,6 +58,16 @@
                 "expiry" : "03/30",
                 "CVC" : "737",
                 "secure3DS" : true
+            }
+        ]
+    },
+    {
+        "group" : "Cartes Bancaires / Visa Debit", 
+        "cards" : [
+            {
+                "cardnumber" : "4035 5010 0000 0008",
+                "expiry" : "03/30",
+                "CVC" : "737"
             }
         ]
     },
