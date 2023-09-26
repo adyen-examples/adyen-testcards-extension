@@ -3,6 +3,7 @@
 
   let cards = [];
   let giftcards = [];
+  let ibans = [];
 
   $("#search").on("keyup", function() {
     var value = $(this).val().toLowerCase();
@@ -31,6 +32,14 @@ async function load() {
     await setInStorage("giftcards", giftcards);
   }
 
+  ibans = await getFromStorage("ibans");
+
+  if(ibans == undefined) {
+    // first time: load from json file
+    ibans = await loadFromFile("data/ibans.json");
+    await setInStorage("ibans", ibans);
+  }
+
   var outerdiv = $('<div>');
 
   // favourites section
@@ -39,6 +48,8 @@ async function load() {
   outerdiv.append(createCards());
   // giftcards section
   outerdiv.append(createGiftCards());
+  // ibans section
+  outerdiv.append(createIbans());
 
   $('#cards').html(outerdiv);
 }
@@ -68,7 +79,7 @@ function createCards() {
 }
 
 // render favourites section
-// find favourites in cards and giftcards lists
+// find favourites in cards, giftcards, ibans lists
 function createFavourites() {
 
   var divFavourites = $('<div>').addClass("cardnumbers");
@@ -120,6 +131,23 @@ function createFavourites() {
     divFavourites.append(table);
   });
 
+  // find favourite IBANs
+  $.each(ibans, function (index, item) {
+    if (item.favourite) {
+      numFavs++;
+
+      var row = $('<tr>');
+      var td0 = ($('<td>').append(makeIbanUnfavIcon(item.iban)));
+      var td1 = ($('<td>').addClass("tdCardNumber").text(item.iban));
+      var td2 = ($('<td>').addClass("tdExpiry").text(item.name));
+      var td3 = ($('<td>').addClass("tdCode").text(""));
+      var td4 = ($('<td>').append(createLinks()));
+      row.append(td0).append(td1).append(td2).append(td3).append(td4);
+      table.append(row);
+    }
+    divFavourites.append(table);
+  });
+
   if(numFavs == 0) {
     // empty section
     var text = $('<em>').text("Add favourites if you like :-)");
@@ -149,7 +177,7 @@ function makeCardFav(cardnumber) {
   load();
 }
 
-// add card to favourites
+// remove card from favourites
 function makeCardUnfav(cardnumber) {
 
   // find card number and mark as not fav  
@@ -185,7 +213,7 @@ function makeGiftCardFav(cardnumber) {
   load();
 }
 
-// add card to favourites
+// remove giftcard from favourites
 function makeGiftCardUnfav(cardnumber) {
 
   // find giftcard number and mark as not fav
@@ -198,6 +226,38 @@ function makeGiftCardUnfav(cardnumber) {
 
   // save to storage and reload
   setInStorage("giftcards", giftcards);
+  load();
+}
+
+// add IBAN to favourites
+function makeIbanFav(iban) {
+
+  // find IBAN number and mark as fav
+  for (let j = 0; j < ibans.length; j++) {
+    let item = ibans[j];
+    if(item.iban === iban) {
+      item.favourite = true;  
+      }
+  }
+
+  // save to storage and reload
+  setInStorage("ibans", ibans);
+  load();
+}
+
+// removed IBAN from favourites
+function makeIbanUnfav(iban) {
+
+  // find IBAN number and mark as not fav
+  for (let j = 0; j < ibans.length; j++) {
+    let item = ibans[j];
+    if(item.iban === iban) {
+      item.favourite = false;  
+      }
+  }
+
+  // save to storage and reload
+  setInStorage("ibans", ibans);
   load();
 }
 
@@ -269,6 +329,39 @@ function createGiftCards() {
   }
 }
 
+// render ibans
+function createIbans() {
+
+  var divIbans = $('<div>').addClass("cardnumbers");
+  var h3 = $('<h3>').addClass("sectionTitle").text("IBANs");
+  divIbans.append(h3);
+
+  let numCards = 0;
+
+  var table = $('<table>');
+  $.each(ibans , function(index, item) { 
+
+    if(!item.favourite) {
+      numCards++;
+
+      var row = $('<tr>');
+      var td0 = ($('<td>').append(makeIbanFavIcon(item.iban)));
+      var td1 = ($('<td>').addClass("tdCardNumber").text(item.iban));
+      var td2 = ($('<td>').addClass("tdExpiry").text(item.name));
+      var td3 = ($('<td>').append(createLinks()));
+      row.append(td0).append(td1).append(td2).append(td3);
+      table.append(row); 
+    }
+  });
+  divIbans.append(table);
+
+  if(numCards > 0) {
+    return divIbans;
+  } else {
+    return undefined;
+  }
+}
+
 // icon to add card in favourites
 function makeCardFavIcon(cardnumber) {
   var div = $('<div>').addClass("fav-icon");
@@ -308,6 +401,28 @@ function makeGiftCardUnfavIcon(cardnumber) {
 
   div.on('click', function() {
     makeGiftCardUnfav(cardnumber);
+  });
+  
+  return div;
+}
+
+// icon to add IBAN in favourites
+function makeIbanFavIcon(iban) {
+  var div = $('<div>').addClass("fav-icon");
+
+  div.on('click', function() {
+    makeIbanFav(iban);
+  });
+  
+  return div;
+}
+
+// icon to remove IBAN from favourites
+function makeIbanUnfavIcon(iban) {
+  var div = $('<div>').addClass("unfav-icon");
+
+  div.on('click', function() {
+    makeIbanUnfav(iban);
   });
   
   return div;
@@ -424,6 +539,22 @@ function prefillCardComponent(cardNumberTd, expiryTd, codeTd) {
     expiryYear.focus();
     document.execCommand('selectAll', false, null);
     document.execCommand('insertText', false, expiryTd.slice(-2));
+  }
+
+  // prefill IBAN
+  var ibanNumber = document.querySelector('input[name^="ibanNumber"]');
+  if(ibanNumber != null) {
+    ibanNumber.focus();
+    document.execCommand('selectAll', false, null);
+    document.execCommand('insertText', false, cardNumberTd);
+  }
+
+  // prefill IBAN holder name
+  var name = document.querySelector('input[name^="ownerName"]');
+  if(name != null) {
+    name.focus();
+    document.execCommand('selectAll', false, null);
+    document.execCommand('insertText', false, expiryTd);
   }
   
 }
