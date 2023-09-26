@@ -44,6 +44,18 @@ We commit all our new features directly into our GitHub repository. Feel free to
 
 Find out more in our [contributing](https://github.com/adyen-examples/.github/blob/main/CONTRIBUTING.md) guidelines.
 
+### Build & PR
+
+In order to contribute:
+* create a new GitHub issue (please specify if it a feature, improvement or bug fix)
+* create a local branch
+* develop and test all features and changes locally ("Load unpacked" from your source)
+* submit a PR
+
+**Note**: the list of cards, giftcards, etc.. are saved (as JSON) on local storage. If the JSON format changes then the existing users might be affected (breaking change?). 
+
+## Mantainers
+
 ### Build & publish
 
 In order to publish a new release:
@@ -52,7 +64,7 @@ In order to publish a new release:
 * create zip file: `zip -r adyen-testcards-ext.zip ./ -x "./e2e/*" ".git/*"`
 * upload zip file to Chrome Web Store
 
-**Note**: the list of cards is saved (as JSON) on local storage. If the JSON format changes then the existing users might be affected (breaking change?). 
+**Note**: the list of cards, giftcards, etc.. are saved (as JSON) on local storage. If the JSON format changes then the existing users might be affected (breaking change?). 
 
 
 
