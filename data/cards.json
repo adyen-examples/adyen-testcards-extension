@@ -1,7 +1,7 @@
 [
     {
         "group" : "American Express (Amex)", 
-        "cards" : [
+        "items" : [
             {
                 "cardnumber" : "3700 0000 0000 002",
                 "expiry" : "03/30",
@@ -22,7 +22,7 @@
     },
     {
         "group" : "Bancontact (BCMC) / Maestro", 
-        "cards" : [
+        "items" : [
             {
                 "cardnumber" : "6703 4444 4444 4449",
                 "expiry" : "03/30",
@@ -37,7 +37,7 @@
     },
     {
         "group" : "Bancontact (BCMC) / Visa Debit", 
-        "cards" : [
+        "items" : [
             {
                 "cardnumber" : "4871 0499 9999 9910",
                 "expiry" : "03/30",
@@ -47,7 +47,7 @@
     },
     {
         "group" : "Cartes Bancaires", 
-        "cards" : [
+        "items" : [
             {
                 "cardnumber" : "4360 0000 0100 0005",
                 "expiry" : "03/30",
@@ -63,7 +63,7 @@
     },
     {
         "group" : "Cartes Bancaires / Visa Debit", 
-        "cards" : [
+        "items" : [
             {
                 "cardnumber" : "4035 5010 0000 0008",
                 "expiry" : "03/30",
@@ -73,7 +73,7 @@
     },
     {
         "group" : "China UnionPay", 
-        "cards" : [
+        "items" : [
             {
                 "cardnumber" : "8171 9999 2766 0000",
                 "expiry" : "03/30",
@@ -99,7 +99,7 @@
     },
     {
         "group" : "Diners", 
-        "cards" : [
+        "items" : [
             {
                 "cardnumber" : "3600 6666 3333 44",
                 "expiry" : "03/30",
@@ -115,7 +115,7 @@
     },
     {
         "group" : "Discover", 
-        "cards" : [
+        "items" : [
             {
                 "cardnumber" : "6011 6011 6011 6611",
                 "expiry" : "03/30",
@@ -135,7 +135,7 @@
     },
     {
         "group" : "Maestro", 
-        "cards" : [
+        "items" : [
             {
                 "cardnumber" : "6771 7980 2100 0008",
                 "expiry" : "03/30",
@@ -151,7 +151,7 @@
     },
     {
         "group" : "Mastercard", 
-        "cards" : [
+        "items" : [
             {
                 "cardnumber" : "2222 4000 7000 0005",
                 "expiry" : "03/30",
@@ -232,7 +232,7 @@
     },
     {
         "group" : "Visa", 
-        "cards" : [
+        "items" : [
             {
                 "cardnumber" : "4111 1111 4555 1142",
                 "expiry" : "03/30",
@@ -273,7 +273,7 @@
     },
     {
         "group" : "Visa Electron", 
-        "cards" : [
+        "items" : [
             {
                 "cardnumber" : "4001 0200 0000 0009",
                 "expiry" : "03/30",
@@ -283,7 +283,7 @@
     },
     {
         "group" : "V Pay", 
-        "cards" : [
+        "items" : [
             {
                 "cardnumber" : "4013 2500 0000 0000 006",
                 "expiry" : "03/30",
