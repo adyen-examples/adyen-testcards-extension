@@ -1,0 +1,22 @@
+[
+    {
+        "cardnumber" : "6036280000000000000",
+        "code" : "ANY",
+        "type" : "givex"
+    },
+    {
+        "cardnumber" : "6364530000000000",
+        "code" : "ANY",
+        "type" : "generic"
+    },
+    {
+        "cardnumber" : "6006490000000000",
+        "code" : "ANY",
+        "type" : "SVS"
+    },
+    {
+        "cardnumber" : "7777182708544835",
+        "code" : "ANY",
+        "type" : "Fiserv"
+    }    
+]

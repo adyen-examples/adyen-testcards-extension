@@ -1,7 +1,8 @@
   // suffix displaying 3DS support
   const THREE_DS_SUFFIX = " (3DS)";
-  // list of cards
-  let list = [];
+
+  let cards = [];
+  let giftcards = [];
 
   $("#search").on("keyup", function() {
     var value = $(this).val().toLowerCase();
@@ -14,42 +15,61 @@
 // load content of the panel
 async function load() {
 
-  list = await getFromStorage();
+  cards = await getFromStorage("cards");
 
-  if(list == undefined) {
+  if(cards == undefined) {
     // first time: load from json file
-    list = await loadFromFile();
-    await setInStorage(list);
+    cards = await loadFromFile("data/cards.json");
+    await setInStorage("cards", cards);
   }
 
-  $('#cards').html(listCards(list));
-}
+  giftcards = await getFromStorage("giftcards");
 
-function listCards(data) {
+  if(giftcards == undefined) {
+    // first time: load from json file
+    giftcards = await loadFromFile("data/giftcards.json");
+    await setInStorage("giftcards", giftcards);
+  }
+
   var outerdiv = $('<div>');
 
   // favourites section
-  outerdiv.append(createFavourites(data));
+  outerdiv.append(createFavourites());
+  // cards section
+  outerdiv.append(createCards());
+  // giftcards section
+  outerdiv.append(createGiftCards());
+
+  $('#cards').html(outerdiv);
+}
+
+// render cards section
+function createCards() {
+
+  var divs = []
 
   // all cards section
-  $.each(data , function(index, item) { 
+  $.each(cards , function(index, item) { 
 
-    const cards = createTable(item.cards);
+    var div = $('<div>').addClass("cardnumbers");
+    var h3 = $('<h3>').addClass("sectionTitle").text(item.group);
+    
+    const cards = createCardsBrandSection(item.items);
     if(cards != undefined) {
-      var div = $('<div>').addClass("cardnumbers");
-      var h3 = $('<h3>').addClass("sectionTitle").text(item.group);
+      // show section when not empty (i.e. all cards are in the favourites section)
       div.append(h3);
-  
       div.append(cards);
+
+      divs.push(div);
     }
-    outerdiv.append(div);
   });
 
-  return outerdiv;
+  return divs;
 }
 
 // render favourites section
-function createFavourites(cards) {
+// find favourites in cards and giftcards lists
+function createFavourites() {
 
   var divFavourites = $('<div>').addClass("cardnumbers");
   var h3 = $('<h3>').addClass("sectionTitle").text("Favourites");
@@ -57,15 +77,16 @@ function createFavourites(cards) {
 
   let numFavs = 0;
 
+  // find favourite cards
   var table = $('<table>');
   $.each(cards , function(index, item) { 
-    $.each(item.cards , function(index, item) { 
+    $.each(item.items , function(index, item) { 
 
       if(item.favourite) {
         numFavs++;
 
         var row = $('<tr>');
-        var td0 = ($('<td>').append(getUnfavIcon(item.cardnumber)));
+        var td0 = ($('<td>').append(makeCardUnfavIcon(item.cardnumber)));
         if(item.secure3DS) {
           // add suffix when card flow supports 3DS ie 3714 4963 5398 431 (3DS)
           var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber + THREE_DS_SUFFIX));
@@ -82,6 +103,23 @@ function createFavourites(cards) {
     })
   });
 
+  // find favourite giftcards
+  $.each(giftcards, function (index, item) {
+    if (item.favourite) {
+      numFavs++;
+
+      var row = $('<tr>');
+      var td0 = ($('<td>').append(makeGiftCardUnfavIcon(item.cardnumber)));
+      var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
+      var td2 = ($('<td>').addClass("tdExpiry").text(item.type));
+      var td3 = ($('<td>').addClass("tdCode").text(item.code));
+      var td4 = ($('<td>').append(createLinks()));
+      row.append(td0).append(td1).append(td2).append(td3).append(td4);
+      table.append(row);
+    }
+    divFavourites.append(table);
+  });
+
   if(numFavs == 0) {
     // empty section
     var text = $('<em>').text("Add favourites if you like :-)");
@@ -92,45 +130,79 @@ function createFavourites(cards) {
 }
 
 // add card to favourites
-function makeFav(cardnumber) {
+function makeCardFav(cardnumber) {
 
-  for (let i = 0; i < list.length; i++) {
-    let items = list[i].cards;
+  // find card number and mark as fav
+  for (let i = 0; i < cards.length; i++) {
+    let items = cards[i].items;
 
     for (let j = 0; j < items.length; j++) {
       let item = items[j];
       if(item.cardnumber === cardnumber) {
-        item.favourite = true;  // mark as fav
+        item.favourite = true;  
         }
     }
   }
 
   // save to storage and reload
-  setInStorage(list);
+  setInStorage("cards", cards);
   load();
 }
 
 // add card to favourites
-function makeUnfav(cardnumber) {
+function makeCardUnfav(cardnumber) {
 
-  for (let i = 0; i < list.length; i++) {
-    let items = list[i].cards;
+  // find card number and mark as not fav  
+  for (let i = 0; i < cards.length; i++) {
+    let items = cards[i].items;
 
     for (let j = 0; j < items.length; j++) {
       let item = items[j];
       if(item.cardnumber === cardnumber) {
-        item.favourite = false;  // mark as not fav
+        item.favourite = false;  
         }
     }
   }
 
   // save to storage and reload
-  setInStorage(list);
+  setInStorage("cards", cards);
+  load();
+}
+
+// add giftcard to favourites
+function makeGiftCardFav(cardnumber) {
+
+  // find giftcard number and mark as fav
+  for (let j = 0; j < giftcards.length; j++) {
+    let item = giftcards[j];
+    if(item.cardnumber === cardnumber) {
+      item.favourite = true;  
+      }
+  }
+
+  // save to storage and reload
+  setInStorage("giftcards", giftcards);
+  load();
+}
+
+// add card to favourites
+function makeGiftCardUnfav(cardnumber) {
+
+  // find giftcard number and mark as not fav
+  for (let j = 0; j < giftcards.length; j++) {
+    let item = giftcards[j];
+    if(item.cardnumber === cardnumber) {
+      item.favourite = false;  
+      }
+  }
+
+  // save to storage and reload
+  setInStorage("giftcards", giftcards);
   load();
 }
 
 // render brand of cards
-function createTable(cards) {
+function createCardsBrandSection(cards) {
 
   let numCards = 0;
 
@@ -141,7 +213,7 @@ function createTable(cards) {
       numCards++;
 
       var row = $('<tr>');
-      var td0 = ($('<td>').append(getFavIcon(item.cardnumber)));
+      var td0 = ($('<td>').append(makeCardFavIcon(item.cardnumber)));
       if(item.secure3DS) {
         // add suffix when card flow supports 3DS ie 3714 4963 5398 431 (3DS)
         var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber + THREE_DS_SUFFIX));
@@ -163,23 +235,79 @@ function createTable(cards) {
   }
 }
 
+// render giftcards
+function createGiftCards() {
+
+  var divGiftCards = $('<div>').addClass("cardnumbers");
+  var h3 = $('<h3>').addClass("sectionTitle").text("Gift cards");
+  divGiftCards.append(h3);
+
+  let numCards = 0;
+
+  var table = $('<table>');
+  $.each(giftcards , function(index, item) { 
+
+    if(!item.favourite) {
+      numCards++;
+
+      var row = $('<tr>');
+      var td0 = ($('<td>').append(makeGiftCardFavIcon(item.cardnumber)));
+      var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
+      var td2 = ($('<td>').addClass("tdType").text(item.type));
+      var td3 = ($('<td>').addClass("tdCode").text(item.code));
+      var td4 = ($('<td>').append(createLinks()));
+      row.append(td0).append(td1).append(td2).append(td3).append(td4);
+      table.append(row); 
+    }
+  });
+  divGiftCards.append(table);
+
+  if(numCards > 0) {
+    return divGiftCards;
+  } else {
+    return undefined;
+  }
+}
+
 // icon to add card in favourites
-function getFavIcon(cardnumber) {
+function makeCardFavIcon(cardnumber) {
   var div = $('<div>').addClass("fav-icon");
 
   div.on('click', function() {
-    makeFav(cardnumber);
+    makeCardFav(cardnumber);
   });
   
   return div;
 }
 
 // icon to remove card from favourites
-function getUnfavIcon(cardnumber) {
+function makeCardUnfavIcon(cardnumber) {
   var div = $('<div>').addClass("unfav-icon");
 
   div.on('click', function() {
-    makeUnfav(cardnumber);
+    makeCardUnfav(cardnumber);
+  });
+  
+  return div;
+}
+
+// icon to add giftcard in favourites
+function makeGiftCardFavIcon(cardnumber) {
+  var div = $('<div>').addClass("fav-icon");
+
+  div.on('click', function() {
+    makeGiftCardFav(cardnumber);
+  });
+  
+  return div;
+}
+
+// icon to remove giftcard from favourites
+function makeGiftCardUnfavIcon(cardnumber) {
+  var div = $('<div>').addClass("unfav-icon");
+
+  div.on('click', function() {
+    makeGiftCardUnfav(cardnumber);
   });
   
   return div;
@@ -266,6 +394,10 @@ function prefillCardComponent(cardNumberTd, expiryTd, codeTd) {
 
   var code = document.querySelector('input[id^="adyen-checkout-encryptedSecurityCode-"]');
   if(code != null) {
+    if(codeTd === "ANY") {
+      // replace ANY placeholder with valid code
+      codeTd = "123";
+    }
     code.focus();
     document.execCommand('selectAll', false, null);
     document.execCommand('insertText', false, codeTd);
@@ -280,9 +412,7 @@ function prefillCardComponent(cardNumberTd, expiryTd, codeTd) {
 
   // prefill expiryMonth (for custom card implementation)
   var expiryMonth = document.querySelector('input[id^="adyen-checkout-encryptedExpiryMonth-"]');
-  console.log(expiryMonth);
   if(expiryMonth != null) { 
-    console.log(expiryTd.slice(0, 2));
     expiryMonth.focus();
     document.execCommand('selectAll', false, null);
     document.execCommand('insertText', false, expiryTd.slice(0, 2));
@@ -299,21 +429,21 @@ function prefillCardComponent(cardNumberTd, expiryTd, codeTd) {
 }
 
 // save cards in local storage
-async function setInStorage(cards) {
-  await chrome.storage.local.set( {adyencards: cards});
+async function setInStorage(name, value) {
+  await chrome.storage.local.set( {[name]: value});
 }
 
 // get cards from local storage
-async function getFromStorage() {
-  let cards = await chrome.storage.local.get(["adyencards"]); 
+async function getFromStorage(name) {
+  let cards = await chrome.storage.local.get([name]); 
 
-  return cards.adyencards;
+  return cards[name];
 }
 
-// load cards from json file
-async function loadFromFile() {
-  console.log("loadFromFile data.json");
-  const res = await fetch(chrome.runtime.getURL('data.json'));
+// load from json file
+async function loadFromFile(filename) {
+  console.log("loadFromFile " + filename);
+  const res = await fetch(chrome.runtime.getURL(filename));
   const obj = await res.json()
   return obj;
 }
