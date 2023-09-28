@@ -15,6 +15,10 @@ a {
   text-decoration: none;
 }
 
+.center {
+  text-align: center;
+}
+
 .cardnumbers {
   border-collapse: collapse;
   width: 100%;
@@ -22,7 +26,7 @@ a {
 }
 
 .cardnumbers td {
-  padding: 6px;
+  padding: 4px;
   border-bottom: 1pt solid #33b964;
 }
 
@@ -39,7 +43,7 @@ a {
 
 .sectionTitle {
   padding-left: 5px;
-} 
+}
 
 .fav-icon {
   width: 15px;
@@ -65,4 +69,85 @@ a {
 
 .unfav-icon:hover {
   background-image: url('./images/empty-start.png'); 
+}
+
+/* Card logos */
+.amex {
+  background-image: url('./images/logos/amex.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
+}
+
+.cup {
+  background-image: url('./images/logos/cup.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
+}
+
+.cartebancaire {
+  background-image: url('./images/logos/cartebancaire.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
+}
+
+.diners {
+  background-image: url('./images/logos/diners.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
+}
+
+.discover {
+  background-image: url('./images/logos/discover.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
+}
+
+.jbc {
+  background-image: url('./images/logos/jbc.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
+}
+
+.maestro {
+  background-image: url('./images/logos/maestro.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
+}
+
+.mc {
+  background-image: url('./images/logos/mc.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
+}
+
+.visa {
+  background-image: url('./images/logos/visa.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
+}
+
+.vpay {
+  background-image: url('./images/logos/vpay.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
 }

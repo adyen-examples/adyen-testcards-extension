@@ -1,22 +1,37 @@
 [
     {
         "iban" : "NL13TEST0123456789",
-        "name" : "A.Klaassen",
+        "name" : "A. Klaassen",
         "country" : "NL"
     },
     {
         "iban" : "NL36TEST0236169114",
-        "name" : "B.Klaassen",
+        "name" : "B. Klaassen",
         "country" : "NL"
     },
     {
         "iban" : "DE87123456781234567890",
-        "name" : "A.Schneider",
+        "name" : "A. Schneider",
         "country" : "DE"
     },
     {
         "iban" : "DE92123456789876543210",
-        "name" : "B.Schneider",
+        "name" : "B. Schneider",
         "country" : "DE"
+    },
+    {
+        "iban" : "IT60X0542811101000000123456",
+        "name" : "A. Pacini",
+        "country" : "IT"
+    },
+    {
+        "iban" : "FR1420041010050500013M02606",
+        "name" : "A. Grand",
+        "country" : "FR"
+    },
+    {
+        "iban" : "ES9121000418450200051332",
+        "name" : "A. Martin",
+        "country" : "ES"
     }
 ]
