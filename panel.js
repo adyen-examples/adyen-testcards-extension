@@ -91,23 +91,25 @@ function createFavourites() {
   // find favourite cards
   var table = $('<table>');
   $.each(cards , function(index, item) { 
+
+    const logo = item.logo;
+
     $.each(item.items , function(index, item) { 
 
       if(item.favourite) {
         numFavs++;
 
         var row = $('<tr>');
-        var td0 = ($('<td>').append(makeCardUnfavIcon(item.cardnumber)));
+        var tdIcon = ($('<td>').append(makeCardUnfavIcon(item.cardnumber)));
         if(item.secure3DS) {
           // add suffix when card flow supports 3DS ie 3714 4963 5398 431 (3DS)
-          var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber + THREE_DS_SUFFIX));
+          var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber + THREE_DS_SUFFIX));
         } else {
-          var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
+          var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
         }
-        var td2 = ($('<td>').addClass("tdExpiry").text(item.expiry));
-        var td3 = ($('<td>').addClass("tdCode").text(item.CVC));
-        var td4 = ($('<td>').append(createLinks()));
-        row.append(td0).append(td1).append(td2).append(td3).append(td4);
+        var tdLogo = ($('<td>').addClass("center").addClass(logo));
+        var tdLinks = ($('<td>').addClass("center").append(createLinks()));
+        row.append(tdIcon).append(tdNumber).append(tdLogo).append(tdLinks);
         table.append(row); 
       }
       divFavourites.append(table);
@@ -120,12 +122,11 @@ function createFavourites() {
       numFavs++;
 
       var row = $('<tr>');
-      var td0 = ($('<td>').append(makeGiftCardUnfavIcon(item.cardnumber)));
-      var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
-      var td2 = ($('<td>').addClass("tdExpiry").text(item.type));
-      var td3 = ($('<td>').addClass("tdCode").text(item.code));
-      var td4 = ($('<td>').append(createLinks()));
-      row.append(td0).append(td1).append(td2).append(td3).append(td4);
+      var tdIcon = ($('<td>').append(makeGiftCardUnfavIcon(item.cardnumber)));
+      var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
+      var tdLogo = ($('<td>').addClass("center").text("Gift Card"));
+      var tdLinks = ($('<td>').addClass("center").append(createLinks()));
+      row.append(tdIcon).append(tdNumber).append(tdLogo).append(tdLinks);
       table.append(row);
     }
     divFavourites.append(table);
@@ -137,12 +138,11 @@ function createFavourites() {
       numFavs++;
 
       var row = $('<tr>');
-      var td0 = ($('<td>').append(makeIbanUnfavIcon(item.iban)));
-      var td1 = ($('<td>').addClass("tdCardNumber").text(item.iban));
-      var td2 = ($('<td>').addClass("tdExpiry").text(item.name));
-      var td3 = ($('<td>').addClass("tdCode").text(""));
-      var td4 = ($('<td>').append(createLinks()));
-      row.append(td0).append(td1).append(td2).append(td3).append(td4);
+      var tdIcon = ($('<td>').append(makeIbanUnfavIcon(item.iban)));
+      var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.iban));
+      var tdLogo = ($('<td>').addClass("center").text("IBAN"));
+      var tdLinks = ($('<td>').addClass("center").append(createLinks()));
+      row.append(tdIcon).append(tdNumber).append(tdLogo).append(tdLinks);
       table.append(row);
     }
     divFavourites.append(table);
@@ -280,9 +280,9 @@ function createCardsBrandSection(cards) {
       } else {
         var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
       }
-      var td2 = ($('<td>').addClass("tdExpiry").text(item.expiry));
-      var td3 = ($('<td>').addClass("tdCode").text(item.CVC));
-      var td4 = ($('<td>').append(createLinks()));
+      var td2 = ($('<td>').addClass("center").addClass("tdExpiry").text(item.expiry));
+      var td3 = ($('<td>').addClass("center").addClass("tdCode").text(item.CVC));
+      var td4 = ($('<td>').addClass("center").append(createLinks()));
       row.append(td0).append(td1).append(td2).append(td3).append(td4);
       table.append(row); 
     }
@@ -314,8 +314,8 @@ function createGiftCards() {
       var td0 = ($('<td>').append(makeGiftCardFavIcon(item.cardnumber)));
       var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
       var td2 = ($('<td>').addClass("tdType").text(item.type));
-      var td3 = ($('<td>').addClass("tdCode").text(item.code));
-      var td4 = ($('<td>').append(createLinks()));
+      var td3 = ($('<td>').addClass("center").addClass("tdCode").text(item.code));
+      var td4 = ($('<td>').addClass("center").append(createLinks()));
       row.append(td0).append(td1).append(td2).append(td3).append(td4);
       table.append(row); 
     }
@@ -347,8 +347,8 @@ function createIbans() {
       var row = $('<tr>');
       var td0 = ($('<td>').append(makeIbanFavIcon(item.iban)));
       var td1 = ($('<td>').addClass("tdCardNumber").text(item.iban));
-      var td2 = ($('<td>').addClass("tdExpiry").text(item.name));
-      var td3 = ($('<td>').append(createLinks()));
+      var td2 = ($('<td>').addClass("tdExpiry").text(item.name));  // note: use expiry column for IBAN account holder
+      var td3 = ($('<td>').addClass("center").append(createLinks()));
       row.append(td0).append(td1).append(td2).append(td3);
       table.append(row); 
     }
@@ -430,7 +430,7 @@ function makeIbanUnfavIcon(iban) {
 
 // create action links (copy, prefill)
 function createLinks() {
-  return $('<span>').append(createCopyLink()).append("&nbsp;&nbsp;&nbsp;").append(createPrefillLink());
+  return $('<div>').addClass("actionLinks").append(createCopyLink()).append("&nbsp;&nbsp;&nbsp;").append(createPrefillLink());
 }
 
 function createCopyLink() {
@@ -491,6 +491,7 @@ async function copyToClipboard(val) {
 
 // find and prefill form input fields
 function prefillCardComponent(cardNumberTd, expiryTd, codeTd) {
+  console.log("prefillCardComponent");
 
   var cardnumber = document.querySelector('input[id^="adyen-checkout-encryptedCardNumber-"]');
 
@@ -499,7 +500,7 @@ function prefillCardComponent(cardNumberTd, expiryTd, codeTd) {
     document.execCommand('selectAll', false, null);
     document.execCommand('insertText', false, cardNumberTd);
   }
-
+  
   var expiry = document.querySelector('input[id^="adyen-checkout-encryptedExpiryDate-"]');
   if(expiry != null) { 
     expiry.focus();
@@ -512,6 +513,10 @@ function prefillCardComponent(cardNumberTd, expiryTd, codeTd) {
     if(codeTd === "ANY") {
       // replace ANY placeholder with valid code
       codeTd = "123";
+    }
+    if(codeTd === "None") {
+      // replace None placeholder with empty code
+      codeTd = "";
     }
     code.focus();
     document.execCommand('selectAll', false, null);
