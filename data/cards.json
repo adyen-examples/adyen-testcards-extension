@@ -1,6 +1,7 @@
 [
     {
         "group" : "American Express (Amex)", 
+        "logo" : "amex",
         "items" : [
             {
                 "cardnumber" : "3700 0000 0000 002",
@@ -22,21 +23,23 @@
     },
     {
         "group" : "Bancontact (BCMC) / Maestro", 
+        "logo" : "maestro",
         "items" : [
             {
                 "cardnumber" : "6703 4444 4444 4449",
                 "expiry" : "03/30",
-                "CVC" : ""
+                "CVC" : "None"
             },
             {
                 "cardnumber" : "6703 0000 0000 0000 003",
                 "expiry" : "03/30",
-                "CVC" : ""
+                "CVC" : "None"
             }
         ]
     },
     {
         "group" : "Bancontact (BCMC) / Visa Debit", 
+        "logo" : "visa",
         "items" : [
             {
                 "cardnumber" : "4871 0499 9999 9910",
@@ -47,6 +50,7 @@
     },
     {
         "group" : "Cartes Bancaires", 
+        "logo" : "cartebancaire",
         "items" : [
             {
                 "cardnumber" : "4360 0000 0100 0005",
@@ -63,6 +67,7 @@
     },
     {
         "group" : "Cartes Bancaires / Visa Debit", 
+        "logo" : "visa",
         "items" : [
             {
                 "cardnumber" : "4035 5010 0000 0008",
@@ -73,6 +78,7 @@
     },
     {
         "group" : "China UnionPay", 
+        "logo" : "cup",
         "items" : [
             {
                 "cardnumber" : "8171 9999 2766 0000",
@@ -99,6 +105,7 @@
     },
     {
         "group" : "Diners", 
+        "logo" : "diners",
         "items" : [
             {
                 "cardnumber" : "3600 6666 3333 44",
@@ -115,6 +122,7 @@
     },
     {
         "group" : "Discover", 
+        "logo" : "discover",
         "items" : [
             {
                 "cardnumber" : "6011 6011 6011 6611",
@@ -135,6 +143,7 @@
     },
     {
         "group" : "Maestro", 
+        "logo" : "maestro",
         "items" : [
             {
                 "cardnumber" : "6771 7980 2100 0008",
@@ -144,13 +153,14 @@
             {
                 "cardnumber" : "5000 5500 0000 0029",
                 "expiry" : "03/30",
-                "CVC" : "",
+                "CVC" : "None",
                 "secure3DS" : true
             }
         ]
     },
     {
         "group" : "Mastercard", 
+        "logo" : "mc",
         "items" : [
             {
                 "cardnumber" : "2222 4000 7000 0005",
@@ -232,6 +242,7 @@
     },
     {
         "group" : "Visa", 
+        "logo" : "visa",
         "items" : [
             {
                 "cardnumber" : "4111 1111 4555 1142",
@@ -273,6 +284,7 @@
     },
     {
         "group" : "Visa Electron", 
+        "logo" : "visa",
         "items" : [
             {
                 "cardnumber" : "4001 0200 0000 0009",
@@ -283,6 +295,7 @@
     },
     {
         "group" : "V Pay", 
+        "logo" : "vpay",
         "items" : [
             {
                 "cardnumber" : "4013 2500 0000 0000 006",
