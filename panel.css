@@ -19,6 +19,10 @@ a {
   text-align: center;
 }
 
+.hidden {
+  display: none;
+}
+
 .cardnumbers {
   border-collapse: collapse;
   width: 100%;

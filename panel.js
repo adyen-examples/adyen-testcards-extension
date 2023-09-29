@@ -107,10 +107,14 @@ function createFavourites() {
         } else {
           var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
         }
+        // add as hidden (not visible but be able to get the value when prefilling card component)
+        var tdExpiry = ($('<td>').addClass("hidden").addClass("tdExpiry").text(item.expiry));
+        // add as hidden (not visible but be able to get the value when prefilling card component)
+        var tdCode = ($('<td>').addClass("hidden").addClass("tdCode").text(item.CVC));
         var tdLogo = ($('<td>').addClass("center").addClass(logo));
-        var tdLinks = ($('<td>').addClass("center").append(createLinks()));
-        row.append(tdIcon).append(tdNumber).append(tdLogo).append(tdLinks);
-        table.append(row); 
+        var tdLinks = ($('<td>').addClass("center").append(createLinks("card")));
+        row.append(tdIcon).append(tdNumber).append(tdExpiry).append(tdCode).append(tdLogo).append(tdLinks);
+        table.append(row);
       }
       divFavourites.append(table);
     })
@@ -124,9 +128,11 @@ function createFavourites() {
       var row = $('<tr>');
       var tdIcon = ($('<td>').append(makeGiftCardUnfavIcon(item.cardnumber)));
       var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
+        // add as hidden (not visible but be able to get the value when prefilling card component)
+        var tdCode = ($('<td>').addClass("hidden").addClass("tdCode").text(item.code));
       var tdLogo = ($('<td>').addClass("center").text("Gift Card"));
-      var tdLinks = ($('<td>').addClass("center").append(createLinks()));
-      row.append(tdIcon).append(tdNumber).append(tdLogo).append(tdLinks);
+      var tdLinks = ($('<td>').addClass("center").append(createLinks("giftcard")));
+      row.append(tdIcon).append(tdNumber).append(tdCode).append(tdLogo).append(tdLinks);
       table.append(row);
     }
     divFavourites.append(table);
@@ -140,9 +146,11 @@ function createFavourites() {
       var row = $('<tr>');
       var tdIcon = ($('<td>').append(makeIbanUnfavIcon(item.iban)));
       var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.iban));
+        // add as hidden (not visible but be able to get the value when prefilling card component)
+        var tdCode = ($('<td>').addClass("hidden").addClass("tdExpiry").text(item.name));  // note: use expiry column for IBAN account holder
       var tdLogo = ($('<td>').addClass("center").text("IBAN"));
-      var tdLinks = ($('<td>').addClass("center").append(createLinks()));
-      row.append(tdIcon).append(tdNumber).append(tdLogo).append(tdLinks);
+      var tdLinks = ($('<td>').addClass("center").append(createLinks("iban")));
+      row.append(tdIcon).append(tdNumber).append(tdCode).append(tdLogo).append(tdLinks);
       table.append(row);
     }
     divFavourites.append(table);
