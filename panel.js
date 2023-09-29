@@ -1,16 +1,16 @@
-  // suffix displaying 3DS support
-  const THREE_DS_SUFFIX = " (3DS)";
+// suffix displaying 3DS support
+const THREE_DS_SUFFIX = " (3DS)";
 
-  let cards = [];
-  let giftcards = [];
-  let ibans = [];
+let cards = [];
+let giftcards = [];
+let ibans = [];
 
-  $("#search").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $(".cardnumbers").each(function(i, card) {
-      $(card).toggle($(card).text().toLowerCase().indexOf(value) > -1)
-    });
-    
+$("#search").on("keyup", function () {
+  var value = $(this).val().toLowerCase();
+  $(".cardnumbers").each(function (i, card) {
+    $(card).toggle($(card).text().toLowerCase().indexOf(value) > -1)
+  });
+
 });
 
 // load content of the panel
@@ -18,7 +18,7 @@ async function load() {
 
   cards = await getFromStorage("cards");
 
-  if(cards == undefined) {
+  if (cards == undefined) {
     // first time: load from json file
     cards = await loadFromFile("data/cards.json");
     await setInStorage("cards", cards);
@@ -26,7 +26,7 @@ async function load() {
 
   giftcards = await getFromStorage("giftcards");
 
-  if(giftcards == undefined) {
+  if (giftcards == undefined) {
     // first time: load from json file
     giftcards = await loadFromFile("data/giftcards.json");
     await setInStorage("giftcards", giftcards);
@@ -34,7 +34,7 @@ async function load() {
 
   ibans = await getFromStorage("ibans");
 
-  if(ibans == undefined) {
+  if (ibans == undefined) {
     // first time: load from json file
     ibans = await loadFromFile("data/ibans.json");
     await setInStorage("ibans", ibans);
@@ -60,13 +60,13 @@ function createCards() {
   var divs = []
 
   // all cards section
-  $.each(cards , function(index, item) { 
+  $.each(cards, function (index, item) {
 
     var div = $('<div>').addClass("cardnumbers");
     var h3 = $('<h3>').addClass("sectionTitle").text(item.group);
-    
+
     const cards = createCardsBrandSection(item.items);
-    if(cards != undefined) {
+    if (cards != undefined) {
       // show section when not empty (i.e. all cards are in the favourites section)
       div.append(h3);
       div.append(cards);
@@ -79,7 +79,7 @@ function createCards() {
 }
 
 // render favourites section
-// find favourites in cards, giftcards, ibans lists
+// find favourites in cards, giftcards, ibans, etc..
 function createFavourites() {
 
   var divFavourites = $('<div>').addClass("cardnumbers");
@@ -90,18 +90,18 @@ function createFavourites() {
 
   // find favourite cards
   var table = $('<table>');
-  $.each(cards , function(index, item) { 
+  $.each(cards, function (index, item) {
 
     const logo = item.logo;
 
-    $.each(item.items , function(index, item) { 
+    $.each(item.items, function (index, item) {
 
-      if(item.favourite) {
+      if (item.favourite) {
         numFavs++;
 
         var row = $('<tr>');
         var tdIcon = ($('<td>').append(makeCardUnfavIcon(item.cardnumber)));
-        if(item.secure3DS) {
+        if (item.secure3DS) {
           // add suffix when card flow supports 3DS ie 3714 4963 5398 431 (3DS)
           var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber + THREE_DS_SUFFIX));
         } else {
@@ -156,7 +156,7 @@ function createFavourites() {
     divFavourites.append(table);
   });
 
-  if(numFavs == 0) {
+  if (numFavs == 0) {
     // empty section
     var text = $('<em>').text("Add favourites if you like :-)");
     divFavourites.append(text);
@@ -174,9 +174,9 @@ function makeCardFav(cardnumber) {
 
     for (let j = 0; j < items.length; j++) {
       let item = items[j];
-      if(item.cardnumber === cardnumber) {
-        item.favourite = true;  
-        }
+      if (item.cardnumber === cardnumber) {
+        item.favourite = true;
+      }
     }
   }
 
@@ -194,9 +194,9 @@ function makeCardUnfav(cardnumber) {
 
     for (let j = 0; j < items.length; j++) {
       let item = items[j];
-      if(item.cardnumber === cardnumber) {
-        item.favourite = false;  
-        }
+      if (item.cardnumber === cardnumber) {
+        item.favourite = false;
+      }
     }
   }
 
@@ -211,9 +211,9 @@ function makeGiftCardFav(cardnumber) {
   // find giftcard number and mark as fav
   for (let j = 0; j < giftcards.length; j++) {
     let item = giftcards[j];
-    if(item.cardnumber === cardnumber) {
-      item.favourite = true;  
-      }
+    if (item.cardnumber === cardnumber) {
+      item.favourite = true;
+    }
   }
 
   // save to storage and reload
@@ -227,9 +227,9 @@ function makeGiftCardUnfav(cardnumber) {
   // find giftcard number and mark as not fav
   for (let j = 0; j < giftcards.length; j++) {
     let item = giftcards[j];
-    if(item.cardnumber === cardnumber) {
-      item.favourite = false;  
-      }
+    if (item.cardnumber === cardnumber) {
+      item.favourite = false;
+    }
   }
 
   // save to storage and reload
@@ -243,9 +243,9 @@ function makeIbanFav(iban) {
   // find IBAN number and mark as fav
   for (let j = 0; j < ibans.length; j++) {
     let item = ibans[j];
-    if(item.iban === iban) {
-      item.favourite = true;  
-      }
+    if (item.iban === iban) {
+      item.favourite = true;
+    }
   }
 
   // save to storage and reload
@@ -259,9 +259,9 @@ function makeIbanUnfav(iban) {
   // find IBAN number and mark as not fav
   for (let j = 0; j < ibans.length; j++) {
     let item = ibans[j];
-    if(item.iban === iban) {
-      item.favourite = false;  
-      }
+    if (item.iban === iban) {
+      item.favourite = false;
+    }
   }
 
   // save to storage and reload
@@ -275,14 +275,14 @@ function createCardsBrandSection(cards) {
   let numCards = 0;
 
   var table = $('<table>');
-  $.each(cards , function(index, item) { 
+  $.each(cards, function (index, item) {
 
-    if(!item.favourite) {
+    if (!item.favourite) {
       numCards++;
 
       var row = $('<tr>');
       var td0 = ($('<td>').append(makeCardFavIcon(item.cardnumber)));
-      if(item.secure3DS) {
+      if (item.secure3DS) {
         // add suffix when card flow supports 3DS ie 3714 4963 5398 431 (3DS)
         var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber + THREE_DS_SUFFIX));
       } else {
@@ -290,13 +290,13 @@ function createCardsBrandSection(cards) {
       }
       var td2 = ($('<td>').addClass("center").addClass("tdExpiry").text(item.expiry));
       var td3 = ($('<td>').addClass("center").addClass("tdCode").text(item.CVC));
-      var td4 = ($('<td>').addClass("center").append(createLinks()));
+      var td4 = ($('<td>').addClass("center").append(createLinks("card")));
       row.append(td0).append(td1).append(td2).append(td3).append(td4);
-      table.append(row); 
+      table.append(row);
     }
   });
 
-  if(numCards > 0) {
+  if (numCards > 0) {
     return table;
   } else {
     return undefined;
@@ -313,9 +313,9 @@ function createGiftCards() {
   let numCards = 0;
 
   var table = $('<table>');
-  $.each(giftcards , function(index, item) { 
+  $.each(giftcards, function (index, item) {
 
-    if(!item.favourite) {
+    if (!item.favourite) {
       numCards++;
 
       var row = $('<tr>');
@@ -323,14 +323,14 @@ function createGiftCards() {
       var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
       var td2 = ($('<td>').addClass("tdType").text(item.type));
       var td3 = ($('<td>').addClass("center").addClass("tdCode").text(item.code));
-      var td4 = ($('<td>').addClass("center").append(createLinks()));
+      var td4 = ($('<td>').addClass("center").append(createLinks("giftcard")));
       row.append(td0).append(td1).append(td2).append(td3).append(td4);
-      table.append(row); 
+      table.append(row);
     }
   });
   divGiftCards.append(table);
 
-  if(numCards > 0) {
+  if (numCards > 0) {
     return divGiftCards;
   } else {
     return undefined;
@@ -347,23 +347,23 @@ function createIbans() {
   let numCards = 0;
 
   var table = $('<table>');
-  $.each(ibans , function(index, item) { 
+  $.each(ibans, function (index, item) {
 
-    if(!item.favourite) {
+    if (!item.favourite) {
       numCards++;
 
       var row = $('<tr>');
       var td0 = ($('<td>').append(makeIbanFavIcon(item.iban)));
       var td1 = ($('<td>').addClass("tdCardNumber").text(item.iban));
       var td2 = ($('<td>').addClass("tdExpiry").text(item.name));  // note: use expiry column for IBAN account holder
-      var td3 = ($('<td>').addClass("center").append(createLinks()));
+      var td3 = ($('<td>').addClass("center").append(createLinks("iban")));
       row.append(td0).append(td1).append(td2).append(td3);
-      table.append(row); 
+      table.append(row);
     }
   });
   divIbans.append(table);
 
-  if(numCards > 0) {
+  if (numCards > 0) {
     return divIbans;
   } else {
     return undefined;
@@ -374,10 +374,10 @@ function createIbans() {
 function makeCardFavIcon(cardnumber) {
   var div = $('<div>').addClass("fav-icon");
 
-  div.on('click', function() {
+  div.on('click', function () {
     makeCardFav(cardnumber);
   });
-  
+
   return div;
 }
 
@@ -385,10 +385,10 @@ function makeCardFavIcon(cardnumber) {
 function makeCardUnfavIcon(cardnumber) {
   var div = $('<div>').addClass("unfav-icon");
 
-  div.on('click', function() {
+  div.on('click', function () {
     makeCardUnfav(cardnumber);
   });
-  
+
   return div;
 }
 
@@ -396,10 +396,10 @@ function makeCardUnfavIcon(cardnumber) {
 function makeGiftCardFavIcon(cardnumber) {
   var div = $('<div>').addClass("fav-icon");
 
-  div.on('click', function() {
+  div.on('click', function () {
     makeGiftCardFav(cardnumber);
   });
-  
+
   return div;
 }
 
@@ -407,10 +407,10 @@ function makeGiftCardFavIcon(cardnumber) {
 function makeGiftCardUnfavIcon(cardnumber) {
   var div = $('<div>').addClass("unfav-icon");
 
-  div.on('click', function() {
+  div.on('click', function () {
     makeGiftCardUnfav(cardnumber);
   });
-  
+
   return div;
 }
 
@@ -418,10 +418,10 @@ function makeGiftCardUnfavIcon(cardnumber) {
 function makeIbanFavIcon(iban) {
   var div = $('<div>').addClass("fav-icon");
 
-  div.on('click', function() {
+  div.on('click', function () {
     makeIbanFav(iban);
   });
-  
+
   return div;
 }
 
@@ -429,16 +429,16 @@ function makeIbanFavIcon(iban) {
 function makeIbanUnfavIcon(iban) {
   var div = $('<div>').addClass("unfav-icon");
 
-  div.on('click', function() {
+  div.on('click', function () {
     makeIbanUnfav(iban);
   });
-  
+
   return div;
 }
 
-// create action links (copy, prefill)
-function createLinks() {
-  return $('<div>').addClass("actionLinks").append(createCopyLink()).append("&nbsp;&nbsp;&nbsp;").append(createPrefillLink());
+// create action links (copy, prefill)   
+function createLinks(type) {
+  return $('<div>').addClass("actionLinks").append(createCopyLink()).append("&nbsp;&nbsp;&nbsp;").append(createPrefillLink(type));
 }
 
 function createCopyLink() {
@@ -450,10 +450,10 @@ function createCopyLink() {
     .click(
       function (evt) {
         evt.preventDefault();
-        var cardNumberTd = $(this).closest("tr").find("td.tdCardNumber"); 
+        var cardNumberTd = $(this).closest("tr").find("td.tdCardNumber");
         // remove suffix (if found)
-        var value = cardNumberTd.text().replace(THREE_DS_SUFFIX, "")  
-       
+        var value = cardNumberTd.text().replace(THREE_DS_SUFFIX, "")
+
         copyToClipboard(value);
       }
     );
@@ -461,7 +461,8 @@ function createCopyLink() {
   return anchor
 }
 
-function createPrefillLink() {
+// create prefill link based on type (card, giftcard, iban, etc..)
+function createPrefillLink(type) {
   const anchor = $('<a>');
   anchor.addClass("copyPrefillClick");
   anchor.attr('href', "a");
@@ -472,22 +473,22 @@ function createPrefillLink() {
         evt.preventDefault();
         var cardNumberTd = $(this).closest("tr").find("td.tdCardNumber");
         // remove suffix (if found)
-        var cardNumberTdValue = cardNumberTd.text().replace(THREE_DS_SUFFIX, "")  
-        var expiryTd = $(this).closest("tr").find("td.tdExpiry");   
-        var codeTd = $(this).closest("tr").find("td.tdCode");   
+        var cardNumberTdValue = cardNumberTd.text().replace(THREE_DS_SUFFIX, "")
+        var expiryTd = $(this).closest("tr").find("td.tdExpiry");
+        var codeTd = $(this).closest("tr").find("td.tdCode");
 
-        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
           var activeTab = tabs[0];
           // inject js script to be run inside the active tab
           // must be injected to be able to access/update DOM
           chrome.scripting.executeScript(
             {
-              target: {tabId: activeTab.id, allFrames: true},
-              func : prefillCardComponent,
-              args : [ cardNumberTdValue, expiryTd.text(), codeTd.text() ]
+              target: { tabId: activeTab.id, allFrames: true },
+              func: prefillCardComponent,
+              args: [type, cardNumberTdValue, expiryTd.text(), codeTd.text()]
             }
           )
-          });
+        });
       }
     );
   return anchor
@@ -497,89 +498,111 @@ async function copyToClipboard(val) {
   await navigator.clipboard.writeText(val)
 }
 
-// find and prefill form input fields
-function prefillCardComponent(cardNumberTd, expiryTd, codeTd) {
-  console.log("prefillCardComponent");
+// find and prefill form input fields (based on type)
+function prefillCardComponent(type, cardNumberTd, expiryTd, codeTd) {
 
-  var cardnumber = document.querySelector('input[id^="adyen-checkout-encryptedCardNumber-"]');
+  if (type === "card" || type == "giftcard") {
+    var cardnumber = document.querySelector('input[id^="adyen-checkout-encryptedCardNumber-"]');
 
-  if(cardnumber != null) {
-    cardnumber.focus();
-    document.execCommand('selectAll', false, null);
-    document.execCommand('insertText', false, cardNumberTd);
-  }
-  
-  var expiry = document.querySelector('input[id^="adyen-checkout-encryptedExpiryDate-"]');
-  if(expiry != null) { 
-    expiry.focus();
-    document.execCommand('selectAll', false, null);
-    document.execCommand('insertText', false, expiryTd);
-  }
-
-  var code = document.querySelector('input[id^="adyen-checkout-encryptedSecurityCode-"]');
-  if(code != null) {
-    if(codeTd === "ANY") {
-      // replace ANY placeholder with valid code
-      codeTd = "123";
+    if (cardnumber != null) {
+      cardnumber.focus({ focusVisible: true });
+      document.execCommand('selectAll', false, null);
+      document.execCommand('insertText', false, cardNumberTd);
     }
-    if(codeTd === "None") {
-      // replace None placeholder with empty code
-      codeTd = "";
+  }
+
+  if (type === "card") {
+    var expiry = document.querySelector('input[id^="adyen-checkout-encryptedExpiryDate-"]');
+
+    if (expiry != null) {
+      expiry.focus({ focusVisible: true });
+      document.execCommand('selectAll', false, null);
+      document.execCommand('insertText', false, expiryTd);
     }
-    code.focus();
-    document.execCommand('selectAll', false, null);
-    document.execCommand('insertText', false, codeTd);
   }
 
-  var holder = document.querySelector('input[id^="adyen-checkout-holderName-"]');
-  if(holder != null) {
-    holder.focus();
-    document.execCommand('selectAll', false, null);
-    document.execCommand('insertText', false, "J. Smith");
+  if (type === "card" || type == "giftcard") {
+    var code = document.querySelector('input[id^="adyen-checkout-encryptedSecurityCode-"]');
+
+    if (code != null) {
+      if (codeTd === "ANY") {
+        // replace ANY placeholder with valid code
+        codeTd = "123";
+      }
+      if (codeTd === "None") {
+        // replace None placeholder with empty code
+        codeTd = "";
+      }
+      code.focus({ focusVisible: true });
+      document.execCommand('selectAll', false, null);
+      document.execCommand('insertText', false, codeTd);
+    }
   }
 
-  // prefill expiryMonth (for custom card implementation)
-  var expiryMonth = document.querySelector('input[id^="adyen-checkout-encryptedExpiryMonth-"]');
-  if(expiryMonth != null) { 
-    expiryMonth.focus();
-    document.execCommand('selectAll', false, null);
-    document.execCommand('insertText', false, expiryTd.slice(0, 2));
+  if (type === "card") {
+    var holder = document.querySelector('input[id^="adyen-checkout-holderName-"]');
+
+    if (holder != null) {
+      holder.focus({ focusVisible: true });
+      document.execCommand('selectAll', false, null);
+      document.execCommand('insertText', false, "J. Smith");
+    }
   }
 
-  // prefill expiryYear (for custom card implementation)
-  var expiryYear = document.querySelector('input[id^="adyen-checkout-encryptedExpiryYear-"]');
-  if(expiryYear != null) { 
-    expiryYear.focus();
-    document.execCommand('selectAll', false, null);
-    document.execCommand('insertText', false, expiryTd.slice(-2));
+  if (type === "card") {
+    // prefill expiryMonth (for custom card implementation)
+    var expiryMonth = document.querySelector('input[id^="adyen-checkout-encryptedExpiryMonth-"]');
+
+    if (expiryMonth != null) {
+      expiryMonth.focus({ focusVisible: true });
+      document.execCommand('selectAll', false, null);
+      document.execCommand('insertText', false, expiryTd.slice(0, 2));
+    }
+  }
+
+  if (type === "card") {
+    // prefill expiryYear (for custom card implementation)
+    var expiryYear = document.querySelector('input[id^="adyen-checkout-encryptedExpiryYear-"]');
+
+    if (expiryYear != null) {
+      expiryYear.focus({ focusVisible: true });
+      document.execCommand('selectAll', false, null);
+      document.execCommand('insertText', false, expiryTd.slice(-2));
+    }
   }
 
   // prefill IBAN
-  var ibanNumber = document.querySelector('input[name^="ibanNumber"]');
-  if(ibanNumber != null) {
-    ibanNumber.focus();
-    document.execCommand('selectAll', false, null);
-    document.execCommand('insertText', false, cardNumberTd);
+  if (type === "iban") {
+    var ibanNumber = document.querySelector('input[name^="ibanNumber"]');
+
+    if (ibanNumber != null) {
+      ibanNumber.focus({ focusVisible: true });
+      document.execCommand('selectAll', false, null);
+      document.execCommand('insertText', false, cardNumberTd);
+    }
   }
 
-  // prefill IBAN holder name
-  var name = document.querySelector('input[name^="ownerName"]');
-  if(name != null) {
-    name.focus();
-    document.execCommand('selectAll', false, null);
-    document.execCommand('insertText', false, expiryTd);
+  if (type === "iban") {
+    // prefill IBAN holder name
+    var name = document.querySelector('input[name^="ownerName"]');
+    
+    if (name != null) {
+      name.focus({ focusVisible: true });
+      document.execCommand('selectAll', false, null);
+      document.execCommand('insertText', false, expiryTd);
+    }
   }
-  
+
 }
 
 // save cards in local storage
 async function setInStorage(name, value) {
-  await chrome.storage.local.set( {[name]: value});
+  await chrome.storage.local.set({ [name]: value });
 }
 
 // get cards from local storage
 async function getFromStorage(name) {
-  let cards = await chrome.storage.local.get([name]); 
+  let cards = await chrome.storage.local.get([name]);
 
   return cards[name];
 }
