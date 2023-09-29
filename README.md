@@ -24,7 +24,7 @@ The installation will warn that the extension can read and write data on all web
 ![Chrome Web Store message](chrome-store-popup.png)
 
 > **Note**
-This is necessary as we do not know on which location your integration is hosted. The Adyen Test Cards extension copies (using Javascript) the selected card details into the Credit Card fields. No other data nor fields are read or changed. All of the code is Open-Source and there is no telemetry in this extension.
+This is necessary as we do not know where your integration is hosted. The Adyen Test Cards extension only copies (using Javascript) the selected card details into the Credit Card fields. No other data or fields are read or changed. All of the code is Open-Source and there is no telemetry in this extension.
 >
 
 #### Installing from source
@@ -36,7 +36,7 @@ This is necessary as we do not know on which location your integration is hosted
 
 ### Usage
 
-Open the extension and choose a card number
+Open the extension and choose a card number.
 
 ## Contributing
 
