@@ -1,6 +1,8 @@
 # Adyen Test Cards Chrome extension
 
-[A Chrome extension](https://chrome.google.com/webstore/detail/adyen-test-cards/icllkfleeahmemjgoibajcmeoehkeoag) allowing to copy and prefill Adyen test card numbers with a single click.
+[A Chrome extension](https://chrome.google.com/webstore/detail/adyen-test-cards/icllkfleeahmemjgoibajcmeoehkeoag) allowing to copy and prefill Adyen test card numbers with a single click. 
+
+Check also our [video](https://www.youtube.com/watch?v=INDxpfjnAnE&t=1s) to learn how to install and use it.
 
 ![Browser extension image](browser-extension.gif)
 
