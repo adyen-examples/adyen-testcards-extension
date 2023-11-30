@@ -98,6 +98,7 @@ function createFavourites() {
   $.each(cards, function (index, item) {
 
     const logo = item.logo;
+    const group = item.group;
 
     $.each(item.items, function (index, item) {
 
@@ -116,7 +117,7 @@ function createFavourites() {
         var tdExpiry = ($('<td>').addClass("hidden").addClass("tdExpiry").text(item.expiry));
         // add as hidden (not visible but be able to get the value when prefilling card component)
         var tdCode = ($('<td>').addClass("hidden").addClass("tdCode").text(item.CVC));
-        var tdLogo = ($('<td>').addClass("center").addClass(logo));
+        var tdLogo = ($('<td>').addClass("center").addClass(logo).attr('title', group));
         var tdLinks = ($('<td>').addClass("center").append(createLinks("card")));
         row.append(tdIcon).append(tdNumber).append(tdExpiry).append(tdCode).append(tdLogo).append(tdLinks);
         table.append(row);
@@ -127,6 +128,9 @@ function createFavourites() {
 
   // find favourite giftcards
   $.each(giftcards, function (index, item) {
+
+    const logo = item.logo;
+
     if (item.favourite) {
       numFavs++;
 
@@ -135,7 +139,7 @@ function createFavourites() {
       var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
         // add as hidden (not visible but be able to get the value when prefilling card component)
         var tdCode = ($('<td>').addClass("hidden").addClass("tdCode").text(item.code));
-      var tdLogo = ($('<td>').addClass("center").text("Gift Card"));
+      var tdLogo = ($('<td>').addClass("center").addClass(logo).attr('title', item.type));
       var tdLinks = ($('<td>').addClass("center").append(createLinks("giftcard")));
       row.append(tdIcon).append(tdNumber).append(tdCode).append(tdLogo).append(tdLinks);
       table.append(row);
