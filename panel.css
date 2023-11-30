@@ -155,3 +155,26 @@ a {
   background-size: 30px 30px; 
   min-width: 30px;
 }
+
+.giftcard {
+  background-image: url('./images/logos/giftcard.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
+}
+
+.svs {
+  background-image: url('./images/logos/svs.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
+}
+.givex {
+  background-image: url('./images/logos/givex.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
+}

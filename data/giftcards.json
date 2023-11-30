@@ -2,21 +2,25 @@
     {
         "cardnumber" : "6036280000000000000",
         "code" : "ANY",
-        "type" : "givex"
+        "type" : "Givex",
+        "logo" : "givex"
     },
     {
         "cardnumber" : "6364530000000000",
         "code" : "ANY",
-        "type" : "generic"
+        "type" : "Generic",
+        "logo" : "giftcard"
     },
     {
         "cardnumber" : "6006490000000000",
         "code" : "ANY",
-        "type" : "SVS"
+        "type" : "SVS",
+        "logo" : "svs"
     },
     {
         "cardnumber" : "7777182708544835",
         "code" : "ANY",
-        "type" : "Fiserv"
+        "type" : "Fiserv",
+        "logo" : "giftcard"
     }    
 ]
