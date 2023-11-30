@@ -1,6 +1,11 @@
 // suffix displaying 3DS support
 const THREE_DS_SUFFIX = " (3DS)";
 
+// name objects on local storage
+const CARDS_LIST = "cards"
+const GIFTCARDS_LIST = "giftcards2"
+const IBANS_LIST = "ibans"
+
 let cards = [];
 let giftcards = [];
 let ibans = [];
@@ -16,28 +21,28 @@ $("#search").on("keyup", function () {
 // load content of the panel
 async function load() {
 
-  cards = await getFromStorage("cards");
+  cards = await getFromStorage(CARDS_LIST);
 
   if (cards == undefined) {
     // first time: load from json file
     cards = await loadFromFile("data/cards.json");
-    await setInStorage("cards", cards);
+    await setInStorage(CARDS_LIST, cards);
   }
 
-  giftcards = await getFromStorage("giftcards");
+  giftcards = await getFromStorage(GIFTCARDS_LIST);
 
   if (giftcards == undefined) {
     // first time: load from json file
     giftcards = await loadFromFile("data/giftcards.json");
-    await setInStorage("giftcards", giftcards);
+    await setInStorage(GIFTCARDS_LIST, giftcards);
   }
 
-  ibans = await getFromStorage("ibans");
+  ibans = await getFromStorage(IBANS_LIST);
 
   if (ibans == undefined) {
     // first time: load from json file
     ibans = await loadFromFile("data/ibans.json");
-    await setInStorage("ibans", ibans);
+    await setInStorage(IBANS_LIST, ibans);
   }
 
   var outerdiv = $('<div>');
@@ -181,7 +186,7 @@ function makeCardFav(cardnumber) {
   }
 
   // save to storage and reload
-  setInStorage("cards", cards);
+  setInStorage(CARDS_LIST, cards);
   load();
 }
 
@@ -201,7 +206,7 @@ function makeCardUnfav(cardnumber) {
   }
 
   // save to storage and reload
-  setInStorage("cards", cards);
+  setInStorage(CARDS_LIST, cards);
   load();
 }
 
@@ -217,7 +222,7 @@ function makeGiftCardFav(cardnumber) {
   }
 
   // save to storage and reload
-  setInStorage("giftcards", giftcards);
+  setInStorage(GIFTCARDS_LIST, giftcards);
   load();
 }
 
@@ -233,7 +238,7 @@ function makeGiftCardUnfav(cardnumber) {
   }
 
   // save to storage and reload
-  setInStorage("giftcards", giftcards);
+  setInStorage(GIFTCARDS_LIST, giftcards);
   load();
 }
 
@@ -249,7 +254,7 @@ function makeIbanFav(iban) {
   }
 
   // save to storage and reload
-  setInStorage("ibans", ibans);
+  setInStorage(IBANS_LIST, ibans);
   load();
 }
 
@@ -265,7 +270,7 @@ function makeIbanUnfav(iban) {
   }
 
   // save to storage and reload
-  setInStorage("ibans", ibans);
+  setInStorage(IBANS_LIST, ibans);
   load();
 }
 
