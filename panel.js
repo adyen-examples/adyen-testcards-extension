@@ -527,7 +527,11 @@ function prefillCardComponent(type, cardNumberTd, expiryTd, codeTd) {
     if (code != null) {
       if (codeTd === "ANY") {
         // replace ANY placeholder with valid code
-        codeTd = "123";
+        if (type == "giftcard") {
+          codeTd = "100";  // default PIN for giftcards
+        } else {
+          codeTd = "123"; // default CVC for cards
+        }
       }
       if (codeTd === "None") {
         // replace None placeholder with empty code
