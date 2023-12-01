@@ -1,7 +1,7 @@
 
 body {
   font-family: Verdana, Geneva, sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 100;
 }
 
@@ -26,7 +26,7 @@ a {
 .cardnumbers {
   border-collapse: collapse;
   width: 100%;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .cardnumbers td {
