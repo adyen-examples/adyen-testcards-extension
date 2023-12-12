@@ -70,14 +70,14 @@ function createCards() {
     var div = $('<div>').addClass("cardnumbers");
     var h3 = $('<h3>').addClass("sectionTitle").text(item.group);
 
-    const cards = createCardsBrandSection(item.items);
+    const cards = createCardsBrandSection(item.group, item.items);
     if (cards != undefined) {
       // show section when not empty (i.e. all cards are in the favourites section)
       div.append(h3);
       div.append(cards);
 
       divs.push(div);
-    }
+    } 
   });
 
   return divs;
@@ -134,7 +134,7 @@ function createFavourites() {
     if (item.favourite) {
       numFavs++;
 
-      var row = $('<tr>');
+      var row = $('<tr>').addClass("searchable");
       var tdIcon = ($('<td>').append(makeGiftCardUnfavIcon(item.cardnumber)));
       var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
         // add as hidden (not visible but be able to get the value when prefilling card component)
@@ -152,11 +152,11 @@ function createFavourites() {
     if (item.favourite) {
       numFavs++;
 
-      var row = $('<tr>');
+      var row = $('<tr>').addClass("searchable");
       var tdIcon = ($('<td>').append(makeIbanUnfavIcon(item.iban)));
       var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.iban));
-        // add as hidden (not visible but be able to get the value when prefilling card component)
-        var tdCode = ($('<td>').addClass("hidden").addClass("tdExpiry").text(item.name));  // note: use expiry column for IBAN account holder
+      // add as hidden (not visible but be able to get the value when prefilling card component)
+      var tdCode = ($('<td>').addClass("hidden").addClass("tdExpiry").text(item.name));  // note: use expiry column for IBAN account holder
       var tdLogo = ($('<td>').addClass("center").text("IBAN"));
       var tdLinks = ($('<td>').addClass("center").append(createLinks("iban")));
       row.append(tdIcon).append(tdNumber).append(tdCode).append(tdLogo).append(tdLinks);
@@ -279,7 +279,7 @@ function makeIbanUnfav(iban) {
 }
 
 // render brand of cards
-function createCardsBrandSection(cards) {
+function createCardsBrandSection(brand, cards) {
 
   let numCards = 0;
 
@@ -289,18 +289,22 @@ function createCardsBrandSection(cards) {
     if (!item.favourite) {
       numCards++;
 
-      var row = $('<tr>');
+      var row = $('<tr>').addClass("searchable");
       var td0 = ($('<td>').append(makeCardFavIcon(item.cardnumber)));
       if (item.secure3DS) {
         // add suffix when card flow supports 3DS ie 3714 4963 5398 431 (3DS)
         var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber + THREE_DS_SUFFIX));
+        // add hidden cell to allow filtering on content (cardnumber, brand, etc..)
+        var tdHidden = ($('<td>').addClass("hidden").text(brand + " " + item.cardnumber + THREE_DS_SUFFIX));
       } else {
         var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
+        // add hidden cell to allow filtering on content (cardnumber, brand, etc..)
+        var tdHidden = ($('<td>').addClass("hidden").text(brand + " " + item.cardnumber));
       }
       var td2 = ($('<td>').addClass("center").addClass("tdExpiry").text(item.expiry));
       var td3 = ($('<td>').addClass("center").addClass("tdCode").text(item.CVC));
       var td4 = ($('<td>').addClass("center").append(createLinks("card")));
-      row.append(td0).append(td1).append(td2).append(td3).append(td4);
+      row.append(tdHidden).append(td0).append(td1).append(td2).append(td3).append(td4);
       table.append(row);
     }
   });
@@ -327,13 +331,15 @@ function createGiftCards() {
     if (!item.favourite) {
       numCards++;
 
-      var row = $('<tr>');
+      var row = $('<tr>').addClass("searchable");
+      // add hidden cell to allow filtering on content (number, code, etc..)
+      var tdHidden = ($('<td>').addClass("hidden").text("giftcards " + item.cardnumber + " " + item.type));
       var td0 = ($('<td>').append(makeGiftCardFavIcon(item.cardnumber)));
       var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
       var td2 = ($('<td>').addClass("tdType").text(item.type));
       var td3 = ($('<td>').addClass("center").addClass("tdCode").text(item.code));
       var td4 = ($('<td>').addClass("center").append(createLinks("giftcard")));
-      row.append(td0).append(td1).append(td2).append(td3).append(td4);
+      row.append(tdHidden).append(td0).append(td1).append(td2).append(td3).append(td4);
       table.append(row);
     }
   });
@@ -361,12 +367,14 @@ function createIbans() {
     if (!item.favourite) {
       numCards++;
 
-      var row = $('<tr>');
+      var row = $('<tr>').addClass("searchable");
+      // add hidden cell to allow filtering on content (number, name, etc..)
+      var tdHidden = ($('<td>').addClass("hidden").text("ibans " + item.iban + " " + item.name));
       var td0 = ($('<td>').append(makeIbanFavIcon(item.iban)));
       var td1 = ($('<td>').addClass("tdCardNumber").text(item.iban));
       var td2 = ($('<td>').addClass("tdExpiry").text(item.name));  // note: use expiry column for IBAN account holder
       var td3 = ($('<td>').addClass("center").append(createLinks("iban")));
-      row.append(td0).append(td1).append(td2).append(td3);
+      row.append(tdHidden).append(td0).append(td1).append(td2).append(td3);
       table.append(row);
     }
   });
