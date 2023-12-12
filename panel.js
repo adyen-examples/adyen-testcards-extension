@@ -11,9 +11,22 @@ let giftcards = [];
 let ibans = [];
 
 $("#search").on("keyup", function () {
-  var value = $(this).val().toLowerCase();
-  $(".cardnumbers").each(function (i, card) {
-    $(card).toggle($(card).text().toLowerCase().indexOf(value) > -1)
+  // filter criteria
+  var criteria = $(this).val().toLowerCase();
+
+  $(".searchable").each(function (i, card) {
+    // filter: hide rows that don't match the criteria
+    $(card).toggle($(card).text().toLowerCase().indexOf(criteria) > -1)
+    // hide divs containing empty tables (ie don't show empty sections)
+    var table = $(card).closest('table');
+    var numVisibleRows = table.find('tr').filter(function() {
+      return $(this).css('display') !== 'none';
+    }).length;
+    if (numVisibleRows === 0) {
+      $(card).closest('div.cardnumbers').hide();
+    } else {
+      $(card).closest('div.cardnumbers').show();
+    }
   });
 
 });
