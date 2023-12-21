@@ -2,9 +2,9 @@
 const THREE_DS_SUFFIX = " (3DS)";
 
 // name objects on local storage
-const CARDS_LIST = "cards"
-const GIFTCARDS_LIST = "giftcards2"
-const IBANS_LIST = "ibans"
+const CARDS_LIST = "cards-list"
+const GIFTCARDS_LIST = "giftcards-list"
+const IBANS_LIST = "ibans-list"
 
 let cards = [];
 let giftcards = [];
@@ -101,8 +101,17 @@ function createCards() {
 function createFavourites() {
 
   var divFavourites = $('<div>').addClass("cardnumbers");
+
+  // Favourites title and helper messages
+  var divFavouritesContainer = $('<div>').addClass("divFavouritesContainer");
   var h3 = $('<h3>').addClass("sectionTitle").text("Favourites");
-  divFavourites.append(h3);
+  // message when hovering over text
+  var copyToClipboardMessageSpan = $('<span>').attr('id', 'copyToClipboardMessageSpanId').addClass("hidden").text("Click to copy in the clipboard");
+  // message when text is copied
+  var textIsCopiedMessageSpan = $('<span>').attr('id', 'textIsCopiedMessageSpanId').addClass("hidden").html("Copied &#x2705;");
+  divFavouritesContainer.append(h3, copyToClipboardMessageSpan, textIsCopiedMessageSpan);
+
+  divFavourites.append(divFavouritesContainer);
 
   let numFavs = 0;
 
@@ -120,16 +129,19 @@ function createFavourites() {
 
         var row = $('<tr>');
         var tdIcon = ($('<td>').append(makeCardUnfavIcon(item.cardnumber)));
+
+        var cardnumber = item.cardnumber;
         if (item.secure3DS) {
           // add suffix when card flow supports 3DS ie 3714 4963 5398 431 (3DS)
-          var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber + THREE_DS_SUFFIX));
-        } else {
-          var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
-        }
-        // add as hidden (not visible but be able to get the value when prefilling card component)
-        var tdExpiry = ($('<td>').addClass("hidden").addClass("tdExpiry").text(item.expiry));
-        // add as hidden (not visible but be able to get the value when prefilling card component)
-        var tdCode = ($('<td>').addClass("hidden").addClass("tdCode").text(item.CVC));
+          cardnumber = cardnumber + THREE_DS_SUFFIX;
+        } 
+        var tdNumber = $('<td>').addClass("tdCardNumber").text(cardnumber);
+        addCopyHandlers(tdNumber);
+
+        var tdExpiry = ($('<td>').addClass("tdExpiry").text(item.expiry));
+        addCopyHandlers(tdExpiry);
+        var tdCode = ($('<td>').addClass("tdCode").text(item.CVC));
+        addCopyHandlers(tdCode);
         var tdLogo = ($('<td>').addClass("center").addClass(logo).attr('title', group));
         var tdLinks = ($('<td>').addClass("center").append(createLinks("card")));
         row.append(tdIcon).append(tdNumber).append(tdExpiry).append(tdCode).append(tdLogo).append(tdLinks);
@@ -150,8 +162,9 @@ function createFavourites() {
       var row = $('<tr>').addClass("searchable");
       var tdIcon = ($('<td>').append(makeGiftCardUnfavIcon(item.cardnumber)));
       var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
-        // add as hidden (not visible but be able to get the value when prefilling card component)
-        var tdCode = ($('<td>').addClass("hidden").addClass("tdCode").text(item.code));
+      addCopyHandlers(tdNumber);
+      var tdCode = ($('<td colspan="2">').addClass("center").addClass("tdCode").text(item.code));
+      addCopyHandlers(tdCode);
       var tdLogo = ($('<td>').addClass("center").addClass(logo).attr('title', item.type));
       var tdLinks = ($('<td>').addClass("center").append(createLinks("giftcard")));
       row.append(tdIcon).append(tdNumber).append(tdCode).append(tdLogo).append(tdLinks);
@@ -168,8 +181,9 @@ function createFavourites() {
       var row = $('<tr>').addClass("searchable");
       var tdIcon = ($('<td>').append(makeIbanUnfavIcon(item.iban)));
       var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.iban));
-      // add as hidden (not visible but be able to get the value when prefilling card component)
-      var tdCode = ($('<td>').addClass("hidden").addClass("tdExpiry").text(item.name));  // note: use expiry column for IBAN account holder
+      addCopyHandlers(tdNumber);
+      var tdCode = ($('<td colspan="2">').addClass("center").addClass("tdExpiry").text(item.name));  // note: use expiry column for IBAN account holder
+      addCopyHandlers(tdCode);
       var tdLogo = ($('<td>').addClass("center").text("IBAN"));
       var tdLinks = ($('<td>').addClass("center").append(createLinks("iban")));
       row.append(tdIcon).append(tdNumber).append(tdCode).append(tdLogo).append(tdLinks);
@@ -303,21 +317,24 @@ function createCardsBrandSection(brand, cards) {
       numCards++;
 
       var row = $('<tr>').addClass("searchable");
-      var td0 = ($('<td>').append(makeCardFavIcon(item.cardnumber)));
+      var tdIcon = ($('<td>').append(makeCardFavIcon(item.cardnumber)));
       if (item.secure3DS) {
         // add suffix when card flow supports 3DS ie 3714 4963 5398 431 (3DS)
-        var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber + THREE_DS_SUFFIX));
+        var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber + THREE_DS_SUFFIX));
         // add hidden cell to allow filtering on content (cardnumber, brand, etc..)
         var tdHidden = ($('<td>').addClass("hidden").text(brand + " " + item.cardnumber + THREE_DS_SUFFIX));
       } else {
-        var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
+        var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
         // add hidden cell to allow filtering on content (cardnumber, brand, etc..)
         var tdHidden = ($('<td>').addClass("hidden").text(brand + " " + item.cardnumber));
       }
-      var td2 = ($('<td>').addClass("center").addClass("tdExpiry").text(item.expiry));
-      var td3 = ($('<td>').addClass("center").addClass("tdCode").text(item.CVC));
-      var td4 = ($('<td>').addClass("center").append(createLinks("card")));
-      row.append(tdHidden).append(td0).append(td1).append(td2).append(td3).append(td4);
+      addCopyHandlers(tdNumber);
+      var tdExpiry = ($('<td>').addClass("center").addClass("tdExpiry").text(item.expiry));
+      addCopyHandlers(tdExpiry);
+      var tdCode = ($('<td>').addClass("center").addClass("tdCode").text(item.CVC));
+      addCopyHandlers(tdCode);
+      var tdLinks = ($('<td>').addClass("center").append(createLinks("card")));
+      row.append(tdHidden).append(tdIcon).append(tdNumber).append(tdExpiry).append(tdCode).append(tdLinks);
       table.append(row);
     }
   });
@@ -347,12 +364,14 @@ function createGiftCards() {
       var row = $('<tr>').addClass("searchable");
       // add hidden cell to allow filtering on content (number, code, etc..)
       var tdHidden = ($('<td>').addClass("hidden").text("giftcards " + item.cardnumber + " " + item.type));
-      var td0 = ($('<td>').append(makeGiftCardFavIcon(item.cardnumber)));
-      var td1 = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
-      var td2 = ($('<td>').addClass("tdType").text(item.type));
-      var td3 = ($('<td>').addClass("center").addClass("tdCode").text(item.code));
-      var td4 = ($('<td>').addClass("center").append(createLinks("giftcard")));
-      row.append(tdHidden).append(td0).append(td1).append(td2).append(td3).append(td4);
+      var tdIcon = ($('<td>').append(makeGiftCardFavIcon(item.cardnumber)));
+      var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.cardnumber));
+      addCopyHandlers(tdNumber);
+      var tdType = ($('<td>').addClass("tdType").text(item.type));
+      var tdCode = ($('<td>').addClass("center").addClass("tdCode").text(item.code));
+      addCopyHandlers(tdCode)
+      var tdLinks = ($('<td>').addClass("center").append(createLinks("giftcard")));
+      row.append(tdHidden).append(tdIcon).append(tdNumber).append(tdType).append(tdCode).append(tdLinks);
       table.append(row);
     }
   });
@@ -383,11 +402,13 @@ function createIbans() {
       var row = $('<tr>').addClass("searchable");
       // add hidden cell to allow filtering on content (number, name, etc..)
       var tdHidden = ($('<td>').addClass("hidden").text("ibans " + item.iban + " " + item.name));
-      var td0 = ($('<td>').append(makeIbanFavIcon(item.iban)));
-      var td1 = ($('<td>').addClass("tdCardNumber").text(item.iban));
-      var td2 = ($('<td>').addClass("tdExpiry").text(item.name));  // note: use expiry column for IBAN account holder
-      var td3 = ($('<td>').addClass("center").append(createLinks("iban")));
-      row.append(tdHidden).append(td0).append(td1).append(td2).append(td3);
+      var tdIcon = ($('<td>').append(makeIbanFavIcon(item.iban)));
+      var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.iban));
+      addCopyHandlers(tdNumber);
+      var tdName = ($('<td>').addClass("tdExpiry").text(item.name));  // note: use expiry column for IBAN account holder
+      addCopyHandlers(tdName)
+      var tdLinks = ($('<td>').addClass("center").append(createLinks("iban")));
+      row.append(tdHidden).append(tdIcon).append(tdNumber).append(tdName).append(tdLinks);
       table.append(row);
     }
   });
@@ -490,6 +511,7 @@ function createCopyLink() {
 
   return anchor
 }
+
 
 // create prefill link based on type (card, giftcard, iban, etc..)
 function createPrefillLink(type) {
