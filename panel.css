@@ -9,6 +9,10 @@ body {
   display: none;
 }
 
+.visible {
+  display: inline-block;
+}
+
 a {
   color: #06f;
   cursor: pointer;
@@ -26,7 +30,7 @@ a {
 }
 
 .cardnumbers td {
-  padding: 4px;
+  padding: 3px;
   border-bottom: 1pt solid #33b964;
 }
 
@@ -173,4 +177,16 @@ a {
   background-position: center;
   background-size: 30px 30px; 
   min-width: 30px;
+}
+
+.copyable:hover {
+  cursor: pointer;
+  position: relative;
+}
+
+
+.divFavouritesContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;  
 }
