@@ -616,14 +616,6 @@ function prefillCardComponent(type, cardNumberTd, expiryTd, codeTd) {
     var code = document.querySelector('input[id^="adyen-checkout-encryptedSecurityCode-"]');
 
     if (code != null) {
-      if (codeTd === "ANY") {
-        // replace ANY placeholder with valid code
-        if (type == "giftcard") {
-          codeTd = "100";  // default PIN for giftcards
-        } else {
-          codeTd = "123"; // default CVC for cards
-        }
-      }
       if (codeTd === "None") {
         // replace None placeholder with empty code
         codeTd = "";
