@@ -528,7 +528,7 @@ function makeIbanUnfavIcon(iban) {
 
 // create action links (copy, prefill)   
 function createLinks(type) {
-  return $('<div>').addClass("actionLinks").append(createCopyLink()).append("&nbsp;&nbsp;&nbsp;").append(createPrefillLink(type));
+  return $('<div>').addClass("actionLinks").append("&nbsp;&nbsp;&nbsp;").append(createPrefillLink(type));
 }
 
 function createCopyLink() {
