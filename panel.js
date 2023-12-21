@@ -201,6 +201,45 @@ function createFavourites() {
   return divFavourites;
 }
 
+// add handlers (hover, click, etc..)
+function addCopyHandlers(element) {
+  // make it copyable
+  element.addClass("copyable");
+  // set handlers
+  element.hover(onHoverHandler).click(copyToClipboardHandler)
+}
+
+// when hovering over copiable text
+// display helper message
+function onHoverHandler() {
+  $(this).hover(function() {
+    if($('#textIsCopiedMessageSpanId').is(':visible')) {
+      return;
+    }
+    $('#copyToClipboardMessageSpanId').show();
+  }, function() {
+    $('#copyToClipboardMessageSpanId').hide();
+  });
+}
+
+// when copying into the clipboard
+function copyToClipboardHandler() {
+  var value = $(this).text().trim();
+  // remove suffix (if found)
+  value = value.replace(THREE_DS_SUFFIX, "")
+  copyToClipboard(value);
+
+   // Show the message
+   $('#textIsCopiedMessageSpanId').show();
+   // Hide other message 
+   $('#copyToClipboardMessageSpanId').hide();
+
+   // Hide after x seconds
+   setTimeout(function() {
+    $('#textIsCopiedMessageSpanId').hide()
+   }, 1000 * 2);
+}
+
 // add card to favourites
 function makeCardFav(cardnumber) {
 
