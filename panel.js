@@ -116,7 +116,8 @@ function createFavourites() {
   let numFavs = 0;
 
   // find favourite cards
-  var table = $('<table>');
+  var table = $('<table>').attr("id", "tableFavouritesId");
+
   $.each(cards, function (index, item) {
 
     const logo = item.logo;
@@ -462,7 +463,7 @@ function createIbans() {
 
 // icon to add card in favourites
 function makeCardFavIcon(cardnumber) {
-  var div = $('<div>').addClass("fav-icon");
+  var div = $('<div>').attr("id", sanitize(cardnumber)).addClass("fav-icon");
 
   div.on('click', function () {
     makeCardFav(cardnumber);
@@ -473,7 +474,7 @@ function makeCardFavIcon(cardnumber) {
 
 // icon to remove card from favourites
 function makeCardUnfavIcon(cardnumber) {
-  var div = $('<div>').addClass("unfav-icon");
+  var div = $('<div>').attr("id", sanitize(cardnumber)).addClass("unfav-icon");
 
   div.on('click', function () {
     makeCardUnfav(cardnumber);
@@ -702,6 +703,10 @@ async function loadFromFile(filename) {
   return obj;
 }
 
+// replace space with underscore
+function sanitize(str) {
+  return str.replace(/ /g, '_');
+}
 
 document.addEventListener('DOMContentLoaded', function () {
   load();
