@@ -213,14 +213,12 @@ function copyToClipboardHandler() {
   value = value.replace(THREE_DS_SUFFIX, "")
   copyToClipboard(value);
 
-   // Show the message
-   $('#textIsCopiedMessageSpanId').show();
-   // Hide other message 
-   $('#copyToClipboardMessageSpanId').hide();
+   // Show message "Copied!"
+   $('#header').html("Copied &#x2705;");
 
    // Hide after x seconds
    setTimeout(function() {
-    $('#textIsCopiedMessageSpanId').hide()
+    $('#header').html("");
    }, 1000 * 2);
 }
 
