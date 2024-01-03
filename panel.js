@@ -105,11 +105,7 @@ function createFavourites() {
   // Favourites title and helper messages
   var divFavouritesContainer = $('<div>').addClass("divFavouritesContainer");
   var h3 = $('<h3>').addClass("sectionTitle").text("Favourites");
-  // message when hovering over text
-  var copyToClipboardMessageSpan = $('<span>').attr('id', 'copyToClipboardMessageSpanId').addClass("hidden").text("Click to copy in the clipboard");
-  // message when text is copied
-  var textIsCopiedMessageSpan = $('<span>').attr('id', 'textIsCopiedMessageSpanId').addClass("hidden").html("Copied &#x2705;");
-  divFavouritesContainer.append(h3, copyToClipboardMessageSpan, textIsCopiedMessageSpan);
+  divFavouritesContainer.append(h3);
 
   divFavourites.append(divFavouritesContainer);
 
@@ -207,20 +203,7 @@ function addCopyHandlers(element) {
   // make it copyable
   element.addClass("copyable");
   // set handlers
-  element.hover(onHoverHandler).click(copyToClipboardHandler)
-}
-
-// when hovering over copiable text
-// display helper message
-function onHoverHandler() {
-  $(this).hover(function() {
-    if($('#textIsCopiedMessageSpanId').is(':visible')) {
-      return;
-    }
-    $('#copyToClipboardMessageSpanId').show();
-  }, function() {
-    $('#copyToClipboardMessageSpanId').hide();
-  });
+  element.click(copyToClipboardHandler)  
 }
 
 // when copying into the clipboard
