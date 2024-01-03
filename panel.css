@@ -191,3 +191,18 @@ a {
   justify-content: space-between;
   align-items: center;  
 }
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  color: black;
+  padding: 10px;
+  text-align: center;
+}
+
+main {
+  margin-top: 25px; 
+}
