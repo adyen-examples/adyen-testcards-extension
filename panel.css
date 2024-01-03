@@ -3,6 +3,7 @@ body {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 12px;
   font-weight: 100;
+  margin: 4px;
 }
 
 .hidden {
