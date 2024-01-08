@@ -79,12 +79,12 @@ test('copy Giftcard details', async ({ page, extensionId }) => {
     expect(clipboard).toContain("6036280000000000000");
 
     // code
-    let code = page.locator('text="123"').first();
+    let code = page.locator('text="100"').first();
     await expect(code).toBeVisible();
     await code.click();
 
     clipboard = await page.evaluate("navigator.clipboard.readText()");
-    expect(clipboard).toContain("123");
+    expect(clipboard).toContain("100");
 
 });
 
