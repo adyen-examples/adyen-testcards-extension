@@ -3,10 +3,15 @@ body {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 12px;
   font-weight: 100;
+  margin: 4px;
 }
 
 .hidden {
   display: none;
+}
+
+.visible {
+  display: inline-block;
 }
 
 a {
@@ -19,10 +24,6 @@ a {
   text-align: center;
 }
 
-.hidden {
-  display: none;
-}
-
 .cardnumbers {
   border-collapse: collapse;
   width: 100%;
@@ -30,7 +31,7 @@ a {
 }
 
 .cardnumbers td {
-  padding: 4px;
+  padding: 3px;
   border-bottom: 1pt solid #33b964;
 }
 
@@ -177,4 +178,31 @@ a {
   background-position: center;
   background-size: 30px 30px; 
   min-width: 30px;
+}
+
+.copyable:hover {
+  cursor: pointer;
+  position: relative;
+}
+
+
+.divFavouritesContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;  
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  color: black;
+  padding: 10px;
+  text-align: center;
+}
+
+main {
+  margin-top: 25px; 
 }
