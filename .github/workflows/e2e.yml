@@ -1,0 +1,37 @@
+name: E2E Testing
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'README.md'
+      - .gitignore
+      - LICENSE
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - 'README.md'
+      - .gitignore
+      - LICENSE
+
+jobs:
+  test:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        working-directory: ./e2e
+        run: npm ci
+      - name: Install chromium
+        working-directory: ./e2e
+        run: npx playwright install --with-deps chromium
+      - name: Run Playwright tests
+        working-directory: ./e2e
+        run: npx playwright test
