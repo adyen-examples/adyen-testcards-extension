@@ -237,12 +237,6 @@
                 "cardnumber" : "5103 2219 1119 9245",
                 "expiry" : "03/30",
                 "CVC" : "737"
-            },
-            {
-                "cardNumber" : "5454 5454 5454 5454",
-                "expiry" : "02/30",
-                "CVC" : 737,
-                "secure3DS" : true
             }
         ]
     },
