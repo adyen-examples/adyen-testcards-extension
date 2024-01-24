@@ -129,6 +129,12 @@
                 "cardnumber" : "3607 0500 0010 20",
                 "expiry" : "03/30",
                 "CVC" : "737",
+                "country" : "NL"
+            },
+            {
+                "cardnumber" : "3056 9309 0259 04",
+                "expiry" : "03/30",
+                "CVC" : "737",
                 "country" : "n/a",
                 "secure3DS" : true
             }
@@ -151,9 +157,11 @@
                 "country" : "GB"
             },
             {
-                "cardnumber" : "3056 9309 0259 04",
+                "cardnumber" : "6011 1111 1111 1117",
                 "expiry" : "03/30",
-                "CVC" : "737"
+                "CVC" : "737",
+                "country" : "n/a",
+                "secure3DS" : true
             }
         ]
     },
