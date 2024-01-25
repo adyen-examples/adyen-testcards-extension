@@ -31,13 +31,13 @@
             {
                 "cardnumber" : "6703 4444 4444 4449",
                 "expiry" : "03/30",
-                "CVC" : "None",
+                "CVC" : "n/a",
                 "country" : "BE"
             },
             {
                 "cardnumber" : "6703 0000 0000 0000 003",
                 "expiry" : "03/30",
-                "CVC" : "None",
+                "CVC" : "n/a",
                 "country" : "BE"
             }
         ]
@@ -68,6 +68,7 @@
                 "cardnumber" : "4035 5014 2814 6300",
                 "expiry" : "03/30",
                 "CVC" : "737",
+                "country" : "n/a",
                 "secure3DS" : true
             }
         ]
@@ -110,7 +111,7 @@
                 "cardnumber" : "6250 9470 0000 0014",
                 "expiry" : "03/30",
                 "CVC" : "123",
-                "country" : "n/a",
+                "country" : "CN",
                 "secure3DS" : true
             }
         ]
@@ -178,7 +179,7 @@
             {
                 "cardnumber" : "5000 5500 0000 0029",
                 "expiry" : "03/30",
-                "CVC" : "None",
+                "CVC" : "n/a",
                 "country" : "n/a",
                 "secure3DS" : true
             }
