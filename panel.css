@@ -76,6 +76,25 @@ a {
   background-image: url('./images/empty-start.png'); 
 }
 
+/* Search field */
+/* .search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-label {
+  margin-right: 10px;
+}
+
+.search-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  flex: 1;
+} */
+
+
 /* Card logos */
 .amex {
   background-image: url('./images/logos/amex.svg'); 
