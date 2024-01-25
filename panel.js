@@ -134,7 +134,6 @@ function createFavourites() {
         } 
         var tdNumber = $('<td>').addClass("tdCardNumber").text(cardnumber);
         addCopyHandlers(tdNumber);
-
         var tdExpiry = ($('<td>').addClass("tdExpiry").text(item.expiry));
         addCopyHandlers(tdExpiry);
         var tdCode = ($('<td>').addClass("tdCode").text(item.CVC));
@@ -350,13 +349,15 @@ function createCardsBrandSection(brand, cards) {
         var tdHidden = ($('<td>').addClass("hidden").text(brand + " " + item.cardnumber));
       }
       addCopyHandlers(tdNumber);
+      var tdCountry = ($('<td>').addClass("center").addClass("tdCountry").text(item.country));
+      addCopyHandlers(tdCountry);
       var tdExpiry = ($('<td>').addClass("center").addClass("tdExpiry").text(item.expiry));
       addCopyHandlers(tdExpiry);
       var tdCode = ($('<td>').addClass("center").addClass("tdCode").text(item.CVC));
       addCopyHandlers(tdCode);
       var tdLinks = ($('<td>').addClass("center").append(createLinks("card")));
-      row.append(tdHidden).append(tdIcon).append(tdNumber).append(tdExpiry).append(tdCode).append(tdLinks);
-      table.append(row);
+      row.append(tdHidden).append(tdIcon).append(tdNumber).append(tdCountry).append(tdExpiry).append(tdCode).append(tdLinks);
+      table.append(row);  
     }
   });
 
@@ -426,10 +427,12 @@ function createIbans() {
       var tdIcon = ($('<td>').append(makeIbanFavIcon(item.iban)));
       var tdNumber = ($('<td>').addClass("tdCardNumber").text(item.iban));
       addCopyHandlers(tdNumber);
+      var tdCountry = ($('<td>').addClass("tdCountry").text(item.country));
+      addCopyHandlers(tdCountry); 
       var tdName = ($('<td>').addClass("tdExpiry").text(item.name));  // note: use expiry column for IBAN account holder
       addCopyHandlers(tdName)
       var tdLinks = ($('<td>').addClass("center").append(createLinks("iban")));
-      row.append(tdHidden).append(tdIcon).append(tdNumber).append(tdName).append(tdLinks);
+      row.append(tdHidden).append(tdIcon).append(tdNumber).append(tdCountry).append(tdName).append(tdLinks);
       table.append(row);
     }
   });
