@@ -48,10 +48,15 @@ Find out more in our [contributing](https://github.com/adyen-examples/.github/bl
 
 ### Build & PR
 
-In order to contribute:
-* create a new GitHub issue (please specify if it a feature, improvement or bug fix)
+To contribute:
+* create a new GitHub issue (please specify if it is a feature, improvement or bug fix)
 * create a local branch
-* develop and test all features and changes locally ("Load unpacked" from your source)
+* develop and test your changes locally ("Load unpacked" from your source)
+* run the E2E tests locally
+  ```
+  cd e2e
+  npx playwright test
+  ```
 * submit a PR
 
 **Note**: the list of cards, giftcards, etc.. are saved (as JSON) on local storage. If the JSON format changes then the existing users might be affected (breaking change?). 
