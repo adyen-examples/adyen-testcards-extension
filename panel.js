@@ -190,7 +190,7 @@ function createFavourites() {
 
   if (numFavs == 0) {
     // empty section
-    var text = $('<span>').html("Click '&#9734' to add favourites here");
+    var text = $('<span>').html("Click '&#9734' to add your favourites here");
     divFavourites.append(text);
   }
 
