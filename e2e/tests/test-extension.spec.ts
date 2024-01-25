@@ -1,11 +1,13 @@
 import { test, expect } from './fixtures';
 
+const ADD_TO_FAVS_TEXT = "Click \'☆\' to add your favourites here";
+
 // verify filter
 test('filter', async ({ page, extensionId }) => {
     await page.goto(`chrome-extension://${extensionId}/panel.html`);
 
     // use filter
-    await expect(page.locator('text="Filter:"')).toBeVisible();
+    await expect(page.getByPlaceholder('Filter...')).toBeVisible();
     await page.locator('input').pressSequentially('Mastercard', { delay: 100 });
 
     // Mastercard visible
@@ -19,8 +21,7 @@ test('filter', async ({ page, extensionId }) => {
 // verify favourites message
 test('fav', async ({ page, extensionId }) => {
     await page.goto(`chrome-extension://${extensionId}/panel.html`);
-
-    await expect(page.locator('text="Add favourites if you like :-)"')).toBeVisible();
+    await expect(page.locator('text=' + ADD_TO_FAVS_TEXT)).toBeVisible();
 });
 
 // verify copy card to clipboard
@@ -42,6 +43,15 @@ test('copy card details', async ({ page, extensionId }) => {
 
     clipboard = await page.evaluate("navigator.clipboard.readText()");
     expect(clipboard).toContain("7373");
+
+    // country
+    let country = page.locator('text="NL"').first();
+    await expect(country).toBeVisible();
+    await country.click();
+
+    clipboard = await page.evaluate("navigator.clipboard.readText()");
+    expect(clipboard).toContain("NL");
+
 });
 
 // verify copy IBAN to clipboard
@@ -93,19 +103,20 @@ test('make favourite', async ({ page, extensionId }) => {
 
     await page.goto(`chrome-extension://${extensionId}/panel.html`);
     // empty favs message is visible
-    await expect(page.locator('text="Add favourites if you like :-)"')).toBeVisible();
+    await expect(page.locator('text=' + ADD_TO_FAVS_TEXT)).toBeVisible();
 
     // pin card in favs
     await page.click("[id='4871_0499_9999_9910']");
     await page.waitForTimeout(1000);
 
     // empty favs message is hidden
-    await expect(page.locator('text="Add favourites if you like :-)"')).not.toBeVisible();
+    await expect(page.locator('text=' + ADD_TO_FAVS_TEXT)).not.toBeVisible();
 
     // unpin card from favs
     await page.click("[id='4871_0499_9999_9910']");
     await page.waitForTimeout(1000);
 
     // empty favs message is visible
-    await expect(page.locator('text="Add favourites if you like :-)"')).toBeVisible();
+    await expect(page.locator('text=' + ADD_TO_FAVS_TEXT)).toBeVisible();
+
 });
