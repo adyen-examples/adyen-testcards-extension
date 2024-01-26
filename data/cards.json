@@ -279,6 +279,13 @@
                 "expiry" : "03/30",
                 "CVC" : "737",
                 "country" : "BR"
+            },
+            {
+                "cardnumber" : "5454 5454 5454 5454",
+                "expiry" : "03/30",
+                "CVC" : "737",
+                "secure3DS" : true,
+                "country": "n/a"
             }
         ]
     },
