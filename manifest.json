@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "Adyen Test Cards",
-    "version": "0.0.2",
-    "description": "Copy and prefill Adyen test card numbers with a single click.",
+    "version": "0.0.3",
+    "description": "Copy and prefill Adyen test card numbers and other payment methods with a single click.",
     "action": {
       "default_title": "Adyen Test Cards"
     },
