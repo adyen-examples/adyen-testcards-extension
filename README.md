@@ -61,7 +61,7 @@ To contribute:
 
 **Note**: the list of cards, giftcards, etc.. are saved (as JSON) on local storage. If the JSON format changes then the existing users might be affected (breaking change?). 
 
-## Mantainers
+## Maintainers
 
 ### Build & publish
 
