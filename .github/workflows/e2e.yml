@@ -26,16 +26,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-      - name: Install required dependencies
-        run: sudo apt-get update && sudo apt-get install -y libasound2
       - name: Install dependencies
         working-directory: ./e2e
         run: npm ci
-      - name: Install Chromium dependencies
-        run: sudo npx playwright install-deps
-      - name: Install Chromium browser
+      - name: Install Chromium with dependencies
         working-directory: ./e2e
-        run: npx playwright install chromium
+        run: npx playwright install --with-deps chromium
       - name: Run Playwright tests
         working-directory: ./e2e
         run: npx playwright test
