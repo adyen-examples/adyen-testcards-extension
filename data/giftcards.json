@@ -2,24 +2,28 @@
     {
         "cardnumber" : "6036280000000000000",
         "code" : "100",
+        "expiry" : "03/30",
         "type" : "Givex",
         "logo" : "givex"
     },
     {
         "cardnumber" : "6364530000000000",
         "code" : "100",
+        "expiry" : "03/30",
         "type" : "Generic",
         "logo" : "giftcard"
     },
     {
         "cardnumber" : "6006490000000000",
         "code" : "100",
+        "expiry" : "03/30",
         "type" : "SVS",
         "logo" : "svs"
     },
     {
         "cardnumber" : "7777182708544835",
         "code" : "100",
+        "expiry" : "03/30",
         "type" : "Fiserv",
         "logo" : "giftcard"
     }    
