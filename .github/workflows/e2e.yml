@@ -3,15 +3,15 @@ name: E2E Testing
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
-      - 'README.md'
+      - "README.md"
       - .gitignore
       - LICENSE
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
-      - 'README.md'
+      - "README.md"
       - .gitignore
       - LICENSE
 
@@ -21,17 +21,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
+      - name: Install required dependencies
+        run: sudo apt-get update && sudo apt-get install -y libasound2
       - name: Install dependencies
         working-directory: ./e2e
         run: npm ci
-      - name: Install chromium
+      - name: Install Chromium dependencies
+        run: sudo npx playwright install-deps
+      - name: Install Chromium browser
         working-directory: ./e2e
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
       - name: Run Playwright tests
         working-directory: ./e2e
         run: npx playwright test
