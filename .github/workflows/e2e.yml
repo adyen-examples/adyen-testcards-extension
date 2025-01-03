@@ -3,33 +3,33 @@ name: E2E Testing
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
-      - 'README.md'
+      - "README.md"
       - .gitignore
       - LICENSE
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
-      - 'README.md'
+      - "README.md"
       - .gitignore
       - LICENSE
 
 jobs:
   test:
     timeout-minutes: 30
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 #using a stable version
     steps:
       - name: Checkout project
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
       - name: Install dependencies
         working-directory: ./e2e
         run: npm ci
-      - name: Install chromium
+      - name: Install Chromium with dependencies
         working-directory: ./e2e
         run: npx playwright install --with-deps chromium
       - name: Run Playwright tests
