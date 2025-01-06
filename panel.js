@@ -2,6 +2,7 @@
 const THREE_DS_SUFFIX = " (3DS)";
 
 // name objects on local storage
+const FAVOURITES_LIST = "favourites-list"
 const CARDS_LIST = "cards-list"
 const GIFTCARDS_LIST = "giftcards-list"
 const IBANS_LIST = "ibans-list"
@@ -9,6 +10,7 @@ const IBANS_LIST = "ibans-list"
 let cards = [];
 let giftcards = [];
 let ibans = [];
+let favourites = [];
 
 $("#search").on("keyup", function () {
   // filter criteria
@@ -34,29 +36,20 @@ $("#search").on("keyup", function () {
 // load content of the panel
 async function load() {
 
-  cards = await getFromStorage(CARDS_LIST);
-
-  if (cards == undefined) {
-    // first time: load from json file
-    cards = await loadFromFile("data/cards.json");
-    await setInStorage(CARDS_LIST, cards);
+  favourites = await getFromStorage(FAVOURITES_LIST);
+  if(favourites == undefined) {
+    // favourites list is not found, migrate from old format
+    migrateFavourites();
   }
 
-  giftcards = await getFromStorage(GIFTCARDS_LIST);
+  cards = await loadFromFile("data/cards.json");
+  await setInStorage(CARDS_LIST, cards);
 
-  if (giftcards == undefined) {
-    // first time: load from json file
-    giftcards = await loadFromFile("data/giftcards.json");
-    await setInStorage(GIFTCARDS_LIST, giftcards);
-  }
+  giftcards = await loadFromFile("data/giftcards.json");
+  await setInStorage(GIFTCARDS_LIST, giftcards);
 
-  ibans = await getFromStorage(IBANS_LIST);
-
-  if (ibans == undefined) {
-    // first time: load from json file
-    ibans = await loadFromFile("data/ibans.json");
-    await setInStorage(IBANS_LIST, ibans);
-  }
+  ibans = await loadFromFile("data/ibans.json");
+  await setInStorage(IBANS_LIST, ibans);
 
   var outerdiv = $('<div>');
 
