@@ -37,7 +37,7 @@ $("#search").on("keyup", function () {
 async function load() {
 
   favourites = await getFromStorage(FAVOURITES_LIST);
-  if(favourites == undefined) {
+  if (favourites == undefined) {
     // favourites list is not found, migrate from old format
     migrateFavourites();
   }
