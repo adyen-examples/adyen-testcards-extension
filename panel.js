@@ -274,7 +274,7 @@ function copyToClipboardHandler() {
 }
 
 // add to favourites
-function makeFav(key) {
+function addFavourite(key) {
   if (!favourites.includes(key)) {
     // add key
     favourites.push(key);
@@ -285,7 +285,7 @@ function makeFav(key) {
 }
 
 // remove from favourites
-function makeUnfav(key) {
+function removeFavourite(key) {
   // remove key
   favourites = favourites.filter(fav => fav !== key);
   // save to storage and reload
@@ -426,7 +426,7 @@ function makeCardFavIcon(cardnumber) {
   var div = $('<div>').attr("id", sanitize(cardnumber)).addClass("fav-icon");
 
   div.on('click', function () {
-    makeFav(cardnumber);
+    addFavourite(cardnumber);
   });
 
   return div;
@@ -437,7 +437,7 @@ function makeCardUnfavIcon(cardnumber) {
   var div = $('<div>').attr("id", sanitize(cardnumber)).addClass("unfav-icon");
 
   div.on('click', function () {
-    makeUnfav(cardnumber);
+    removeFavourite(cardnumber);
   });
 
   return div;
@@ -448,7 +448,7 @@ function makeGiftCardFavIcon(cardnumber) {
   var div = $('<div>').addClass("fav-icon");
 
   div.on('click', function () {
-    makeFav(cardnumber);
+    addFavourite(cardnumber);
   });
 
   return div;
@@ -459,7 +459,7 @@ function makeGiftCardUnfavIcon(cardnumber) {
   var div = $('<div>').addClass("unfav-icon");
 
   div.on('click', function () {
-    makeUnfav(cardnumber);
+    removeFavourite(cardnumber);
   });
 
   return div;
@@ -470,7 +470,7 @@ function makeIbanFavIcon(iban) {
   var div = $('<div>').addClass("fav-icon");
 
   div.on('click', function () {
-    makeFav(iban);
+    addFavourite(iban);
   });
 
   return div;
@@ -481,7 +481,7 @@ function makeIbanUnfavIcon(iban) {
   var div = $('<div>').addClass("unfav-icon");
 
   div.on('click', function () {
-    makeUnfav(iban);
+    removeFavourite(iban);
   });
 
   return div;
