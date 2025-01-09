@@ -66,56 +66,62 @@ async function load() {
 }
 
 async function migrateFavourites() {
-  // migrate favourites (from cards, giftcards, ibans) to new format
-  // this function can be eventually removed in future versions
-  console.log("Migrating favourites to new format");
 
-  favourites = [];
+  try {
+    // migrate favourites (from cards, giftcards, ibans) to new format
+    // this function can be eventually removed in future versions
+    console.log("Migrating favourites to new format");
 
-  let cards = await getFromStorage(CARDS_LIST);
+    favourites = [];
 
-  if (cards != undefined) {
-    // copy favourites from cards
-    for (let i = 0; i < cards.length; i++) {
-      let items = cards[i].items;
+    let cards = await getFromStorage(CARDS_LIST);
 
-      for (let j = 0; j < items.length; j++) {
-        let item = items[j];
+    if (cards != undefined) {
+      // copy favourites from cards
+      for (let i = 0; i < cards.length; i++) {
+        let items = cards[i].items;
+
+        for (let j = 0; j < items.length; j++) {
+          let item = items[j];
+          if (item.favourite) {
+            favourites.push(item.cardnumber);
+            console.log("Save as favourite: " + item.cardnumber);
+          }
+        }
+      }
+    }
+
+    let giftcards = await getFromStorage(GIFTCARDS_LIST);
+
+    if (giftcards != undefined) {
+      // copy favourites from giftcards
+      for (let j = 0; j < giftcards.length; j++) {
+        let item = giftcards[j];
         if (item.favourite) {
           favourites.push(item.cardnumber);
           console.log("Save as favourite: " + item.cardnumber);
         }
       }
     }
-  }
 
-  let giftcards = await getFromStorage(GIFTCARDS_LIST);
+    let ibans = await getFromStorage(IBANS_LIST);
 
-  if (giftcards != undefined) {
-    // copy favourites from giftcards
-    for (let j = 0; j < giftcards.length; j++) {
-      let item = giftcards[j];
-      if (item.favourite) {
-        favourites.push(item.cardnumber);
-        console.log("Save as favourite: " + item.cardnumber);
+    if (ibans != undefined) {
+      // copy favourites from ibans
+      for (let j = 0; j < ibans.length; j++) {
+        let item = ibans[j];
+        if (item.favourite) {
+          favourites.push(item.iban);
+          console.log("Save as favourite: " + item.iban);
+        }
       }
     }
+
+    await setInStorage(FAVOURITES_LIST, favourites);
+  } catch (error) {
+    // catch and log error
+    console.error("An error has occurred while migrating favourites: ", error);
   }
-
-  let ibans = await getFromStorage(IBANS_LIST);
-
-  if (ibans != undefined) {
-    // copy favourites from ibans
-    for (let j = 0; j < ibans.length; j++) {
-      let item = ibans[j];
-      if (item.favourite) {
-        favourites.push(item.iban);
-        console.log("Save as favourite: " + item.iban);
-      }
-    }
-  }
-
-  await setInStorage(FAVOURITES_LIST, favourites);
 }
 
 // render cards section
