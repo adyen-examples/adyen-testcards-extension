@@ -71,10 +71,6 @@ In order to publish a new release:
 * create a new release: the `package-extension.yml` workflow will package the extension in a zip file and add it to the assets of the new release
 * upload zip file to Chrome Web Store
 
-**Note**: the list of cards, giftcards, etc.. are saved (as JSON) on local storage. If the JSON format changes then the existing users might be affected (breaking change?). 
-
-
-
 ## License
 
 MIT license. For more information, see the **LICENSE** file.
