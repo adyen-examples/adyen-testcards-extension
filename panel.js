@@ -2,6 +2,7 @@
 const THREE_DS_SUFFIX = " (3DS)";
 
 // name objects on local storage
+const FAVOURITES_LIST = "favourites-list"
 const CARDS_LIST = "cards-list"
 const GIFTCARDS_LIST = "giftcards-list"
 const IBANS_LIST = "ibans-list"
@@ -9,6 +10,7 @@ const IBANS_LIST = "ibans-list"
 let cards = [];
 let giftcards = [];
 let ibans = [];
+let favourites = [];
 
 $("#search").on("keyup", function () {
   // filter criteria
@@ -34,29 +36,20 @@ $("#search").on("keyup", function () {
 // load content of the panel
 async function load() {
 
-  cards = await getFromStorage(CARDS_LIST);
-
-  if (cards == undefined) {
-    // first time: load from json file
-    cards = await loadFromFile("data/cards.json");
-    await setInStorage(CARDS_LIST, cards);
+  favourites = await getFromStorage(FAVOURITES_LIST);
+  if (favourites == undefined) {
+    // favourites list is not found, migrate from old format
+    migrateFavourites();
   }
 
-  giftcards = await getFromStorage(GIFTCARDS_LIST);
+  cards = await loadFromFile("data/cards.json");
+  await setInStorage(CARDS_LIST, cards);
 
-  if (giftcards == undefined) {
-    // first time: load from json file
-    giftcards = await loadFromFile("data/giftcards.json");
-    await setInStorage(GIFTCARDS_LIST, giftcards);
-  }
+  giftcards = await loadFromFile("data/giftcards.json");
+  await setInStorage(GIFTCARDS_LIST, giftcards);
 
-  ibans = await getFromStorage(IBANS_LIST);
-
-  if (ibans == undefined) {
-    // first time: load from json file
-    ibans = await loadFromFile("data/ibans.json");
-    await setInStorage(IBANS_LIST, ibans);
-  }
+  ibans = await loadFromFile("data/ibans.json");
+  await setInStorage(IBANS_LIST, ibans);
 
   var outerdiv = $('<div>');
 
@@ -70,6 +63,65 @@ async function load() {
   outerdiv.append(createIbans());
 
   $('#cards').html(outerdiv);
+}
+
+async function migrateFavourites() {
+
+  try {
+    // migrate favourites (from cards, giftcards, ibans) to new format
+    // this function can be eventually removed in future versions
+    console.log("Migrating favourites to new format");
+
+    favourites = [];
+
+    let cards = await getFromStorage(CARDS_LIST);
+
+    if (cards != undefined) {
+      // copy favourites from cards
+      for (let i = 0; i < cards.length; i++) {
+        let items = cards[i].items;
+
+        for (let j = 0; j < items.length; j++) {
+          let item = items[j];
+          if (item.favourite) {
+            favourites.push(item.cardnumber);
+            console.log("Save as favourite: " + item.cardnumber);
+          }
+        }
+      }
+    }
+
+    let giftcards = await getFromStorage(GIFTCARDS_LIST);
+
+    if (giftcards != undefined) {
+      // copy favourites from giftcards
+      for (let j = 0; j < giftcards.length; j++) {
+        let item = giftcards[j];
+        if (item.favourite) {
+          favourites.push(item.cardnumber);
+          console.log("Save as favourite: " + item.cardnumber);
+        }
+      }
+    }
+
+    let ibans = await getFromStorage(IBANS_LIST);
+
+    if (ibans != undefined) {
+      // copy favourites from ibans
+      for (let j = 0; j < ibans.length; j++) {
+        let item = ibans[j];
+        if (item.favourite) {
+          favourites.push(item.iban);
+          console.log("Save as favourite: " + item.iban);
+        }
+      }
+    }
+
+    await setInStorage(FAVOURITES_LIST, favourites);
+  } catch (error) {
+    // catch and log error
+    console.error("An error has occurred while migrating favourites: ", error);
+  }
 }
 
 // render cards section
@@ -121,7 +173,7 @@ function createFavourites() {
 
     $.each(item.items, function (index, item) {
 
-      if (item.favourite) {
+      if (isFavourite(item.cardnumber)) {
         numFavs++;
 
         var row = $('<tr>');
@@ -152,7 +204,7 @@ function createFavourites() {
 
     const logo = item.logo;
 
-    if (item.favourite) {
+    if (isFavourite(item.cardnumber)) {
       numFavs++;
 
       var row = $('<tr>').addClass("searchable");
@@ -171,7 +223,7 @@ function createFavourites() {
 
   // find favourite IBANs
   $.each(ibans, function (index, item) {
-    if (item.favourite) {
+    if (isFavourite(item.iban)) {
       numFavs++;
 
       var row = $('<tr>').addClass("searchable");
@@ -221,107 +273,23 @@ function copyToClipboardHandler() {
    }, 1000 * 2);
 }
 
-// add card to favourites
-function makeCardFav(cardnumber) {
-
-  // find card number and mark as fav
-  for (let i = 0; i < cards.length; i++) {
-    let items = cards[i].items;
-
-    for (let j = 0; j < items.length; j++) {
-      let item = items[j];
-      if (item.cardnumber === cardnumber) {
-        item.favourite = true;
-      }
-    }
+// add to favourites
+function addFavourite(key) {
+  if (!favourites.includes(key)) {
+    // add key
+    favourites.push(key);
+    // save to storage and reload
+    setInStorage(FAVOURITES_LIST, favourites);
+    load();
   }
-
-  // save to storage and reload
-  setInStorage(CARDS_LIST, cards);
-  load();
 }
 
-// remove card from favourites
-function makeCardUnfav(cardnumber) {
-
-  // find card number and mark as not fav  
-  for (let i = 0; i < cards.length; i++) {
-    let items = cards[i].items;
-
-    for (let j = 0; j < items.length; j++) {
-      let item = items[j];
-      if (item.cardnumber === cardnumber) {
-        item.favourite = false;
-      }
-    }
-  }
-
+// remove from favourites
+function removeFavourite(key) {
+  // remove key
+  favourites = favourites.filter(fav => fav !== key);
   // save to storage and reload
-  setInStorage(CARDS_LIST, cards);
-  load();
-}
-
-// add giftcard to favourites
-function makeGiftCardFav(cardnumber) {
-
-  // find giftcard number and mark as fav
-  for (let j = 0; j < giftcards.length; j++) {
-    let item = giftcards[j];
-    if (item.cardnumber === cardnumber) {
-      item.favourite = true;
-    }
-  }
-
-  // save to storage and reload
-  setInStorage(GIFTCARDS_LIST, giftcards);
-  load();
-}
-
-// remove giftcard from favourites
-function makeGiftCardUnfav(cardnumber) {
-
-  // find giftcard number and mark as not fav
-  for (let j = 0; j < giftcards.length; j++) {
-    let item = giftcards[j];
-    if (item.cardnumber === cardnumber) {
-      item.favourite = false;
-    }
-  }
-
-  // save to storage and reload
-  setInStorage(GIFTCARDS_LIST, giftcards);
-  load();
-}
-
-// add IBAN to favourites
-function makeIbanFav(iban) {
-
-  // find IBAN number and mark as fav
-  for (let j = 0; j < ibans.length; j++) {
-    let item = ibans[j];
-    if (item.iban === iban) {
-      item.favourite = true;
-    }
-  }
-
-  // save to storage and reload
-  setInStorage(IBANS_LIST, ibans);
-  load();
-}
-
-// removed IBAN from favourites
-function makeIbanUnfav(iban) {
-
-  // find IBAN number and mark as not fav
-  for (let j = 0; j < ibans.length; j++) {
-    let item = ibans[j];
-    if (item.iban === iban) {
-      item.favourite = false;
-    }
-  }
-
-  // save to storage and reload
-  setInStorage(IBANS_LIST, ibans);
+  setInStorage(FAVOURITES_LIST, favourites);
   load();
 }
 
@@ -333,7 +301,8 @@ function createCardsBrandSection(brand, cards) {
   var table = $('<table>');
   $.each(cards, function (index, item) {
 
-    if (!item.favourite) {
+    // display card only if not in favourites
+    if (!isFavourite(item.cardnumber)) {
       numCards++;
 
       var row = $('<tr>').addClass("searchable");
@@ -380,7 +349,8 @@ function createGiftCards() {
   var table = $('<table>');
   $.each(giftcards, function (index, item) {
 
-    if (!item.favourite) {
+    // display giftcard only if not in favourites
+    if (!isFavourite(item.cardnumber)) {
       numCards++;
 
       var row = $('<tr>').addClass("searchable");
@@ -418,7 +388,8 @@ function createIbans() {
   var table = $('<table>');
   $.each(ibans, function (index, item) {
 
-    if (!item.favourite) {
+    // display iban only if not in favourites
+    if (!isFavourite(item.iban)) {
       numCards++;
 
       var row = $('<tr>').addClass("searchable");
@@ -445,12 +416,17 @@ function createIbans() {
   }
 }
 
+// check if the key (card, giftcard, iban) is in favourites
+function isFavourite(key) {
+  return favourites.includes(key);
+}
+
 // icon to add card in favourites
 function makeCardFavIcon(cardnumber) {
   var div = $('<div>').attr("id", sanitize(cardnumber)).addClass("fav-icon");
 
   div.on('click', function () {
-    makeCardFav(cardnumber);
+    addFavourite(cardnumber);
   });
 
   return div;
@@ -461,7 +437,7 @@ function makeCardUnfavIcon(cardnumber) {
   var div = $('<div>').attr("id", sanitize(cardnumber)).addClass("unfav-icon");
 
   div.on('click', function () {
-    makeCardUnfav(cardnumber);
+    removeFavourite(cardnumber);
   });
 
   return div;
@@ -472,7 +448,7 @@ function makeGiftCardFavIcon(cardnumber) {
   var div = $('<div>').addClass("fav-icon");
 
   div.on('click', function () {
-    makeGiftCardFav(cardnumber);
+    addFavourite(cardnumber);
   });
 
   return div;
@@ -483,7 +459,7 @@ function makeGiftCardUnfavIcon(cardnumber) {
   var div = $('<div>').addClass("unfav-icon");
 
   div.on('click', function () {
-    makeGiftCardUnfav(cardnumber);
+    removeFavourite(cardnumber);
   });
 
   return div;
@@ -494,7 +470,7 @@ function makeIbanFavIcon(iban) {
   var div = $('<div>').addClass("fav-icon");
 
   div.on('click', function () {
-    makeIbanFav(iban);
+    addFavourite(iban);
   });
 
   return div;
@@ -505,7 +481,7 @@ function makeIbanUnfavIcon(iban) {
   var div = $('<div>').addClass("unfav-icon");
 
   div.on('click', function () {
-    makeIbanUnfav(iban);
+    removeFavourite(iban);
   });
 
   return div;
