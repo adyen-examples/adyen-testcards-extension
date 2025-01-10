@@ -57,7 +57,8 @@
                 "cardnumber" : "4360 0000 0100 0005",
                 "expiry" : "03/30",
                 "CVC" : "737",
-                "country" : "FR"
+                "country" : "FR",
+                "secure3DS" : true
             },
             {
                 "cardnumber" : "4035 5014 2814 6300",
