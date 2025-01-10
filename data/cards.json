@@ -114,7 +114,7 @@
     },
     {
         "group" : "Dankort", 
-        "logo" : "dankort",
+        "logo" : "mc",
         "items" : [
             {
                 "cardnumber" : "5019 5555 4444 5555",
