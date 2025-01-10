@@ -101,6 +101,14 @@ a {
   min-width: 30px;
 }
 
+.dankort {
+  background-image: url('./images/logos/dankort.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px; 
+  min-width: 30px;
+}
+
 .diners {
   background-image: url('./images/logos/diners.svg'); 
   background-repeat: no-repeat;
