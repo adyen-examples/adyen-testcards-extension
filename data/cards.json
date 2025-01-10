@@ -32,13 +32,8 @@
                 "cardnumber" : "6703 4444 4444 4449",
                 "expiry" : "03/30",
                 "CVC" : "n/a",
-                "country" : "BE"
-            },
-            {
-                "cardnumber" : "6703 0000 0000 0000 003",
-                "expiry" : "03/30",
-                "CVC" : "n/a",
-                "country" : "BE"
+                "country" : "BE",
+                "secure3DS" : true
             }
         ]
     },
