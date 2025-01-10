@@ -32,13 +32,8 @@
                 "cardnumber" : "6703 4444 4444 4449",
                 "expiry" : "03/30",
                 "CVC" : "n/a",
-                "country" : "BE"
-            },
-            {
-                "cardnumber" : "6703 0000 0000 0000 003",
-                "expiry" : "03/30",
-                "CVC" : "n/a",
-                "country" : "BE"
+                "country" : "BE",
+                "secure3DS" : true
             }
         ]
     },
@@ -62,7 +57,8 @@
                 "cardnumber" : "4360 0000 0100 0005",
                 "expiry" : "03/30",
                 "CVC" : "737",
-                "country" : "FR"
+                "country" : "FR",
+                "secure3DS" : true
             },
             {
                 "cardnumber" : "4035 5014 2814 6300",
@@ -117,6 +113,30 @@
         ]
     },
     {
+        "group" : "Dankort", 
+        "logo" : "mc",
+        "items" : [
+            {
+                "cardnumber" : "5019 5555 4444 5555",
+                "expiry" : "03/30",
+                "CVC" : "737",
+                "country" : "DK"
+            }
+        ]
+    },
+    {
+        "group" : "Dankort / Visa", 
+        "logo" : "visa",
+        "items" : [
+            {
+                "cardnumber" : "4571 0000 0000 0001",
+                "expiry" : "03/30",
+                "CVC" : "737",
+                "country" : "DK"
+            }
+        ]
+    },
+    {
         "group" : "Diners", 
         "logo" : "diners",
         "items" : [
@@ -163,6 +183,18 @@
                 "CVC" : "737",
                 "country" : "n/a",
                 "secure3DS" : true
+            }
+        ]
+    },
+    {
+        "group" : "JCB", 
+        "logo" : "jcb",
+        "items" : [
+            {
+                "cardnumber" : "3569 9900 1009 5841",
+                "expiry" : "03/30",
+                "CVC" : "737",
+                "country" : "US"
             }
         ]
     },
