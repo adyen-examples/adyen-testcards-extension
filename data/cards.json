@@ -117,6 +117,30 @@
         ]
     },
     {
+        "group" : "Dankort", 
+        "logo" : "dankort",
+        "items" : [
+            {
+                "cardnumber" : "5019 5555 4444 5555",
+                "expiry" : "03/30",
+                "CVC" : "737",
+                "country" : "DK"
+            }
+        ]
+    },
+    {
+        "group" : "Dankort / Visa", 
+        "logo" : "visa",
+        "items" : [
+            {
+                "cardnumber" : "4571 0000 0000 0001",
+                "expiry" : "03/30",
+                "CVC" : "737",
+                "country" : "DK"
+            }
+        ]
+    },
+    {
         "group" : "Diners", 
         "logo" : "diners",
         "items" : [
@@ -163,6 +187,18 @@
                 "CVC" : "737",
                 "country" : "n/a",
                 "secure3DS" : true
+            }
+        ]
+    },
+    {
+        "group" : "JCB", 
+        "logo" : "jcb",
+        "items" : [
+            {
+                "cardnumber" : "3569 9900 1009 5841",
+                "expiry" : "03/30",
+                "CVC" : "737",
+                "country" : "US"
             }
         ]
     },
